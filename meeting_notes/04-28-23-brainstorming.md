@@ -1,26 +1,3 @@
-# Learning Llamas (Team 2) Meeting
-## Fortune Telling Brainstorming
-## 4/28/2023, 4:00-5:00pm on Zoom
----
-## Attendance
-- [x] Aaron
-- [x] Daniel
-- [] Fuyao
-- [x] Ian
-- [x] Jane
-- [] Leon
-- [x] Preston
-- [x] Zheng 
-- [x] Zichen
-
-## Miro board sections
-* What is fortune telling? ~ Aaron
-* Mood/Vibe ~ Daniel
-* Features ~ Zheng
-* Users ~ Zichen
-* Research into other apps ~ Preston
-* Potential problems ~ Jane
-
 ## Research Sharing
 Aaron’s ideas:
 * Historical background is heavy

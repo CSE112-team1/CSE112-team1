@@ -1,25 +1,3 @@
-# Learning Llamas (Team 2) Meeting
-## Fortune Telling Brainstorming 2
-## 5/01/2023, 4:00-5:30pm on Zoom
----
-## Attendance
-- [x] Aaron
-- [x] Daniel
-- [x] Fuyao
-- [x] Ian
-- [x] Jane
-- [x] Leon
-- [x] Preston
-- [x] Zheng 
-- [x] Zichen
-
-## Miro board sections
-* Problem, Solution, Statement of Purpose ~ Aaron & Fuyao
-* UI/UX ~ Daniel & Leon
-* Features ~ Zheng
-* User Profiles ~ Zichen
-* Rabbit holes ~ Preston & Jane
-
 # Problem, Solution, Statement of Purpose
 * Problems: Uncertainty, Stress, Unhappiness
 * Solution: Reassurance, Spiritual comfort, Advide, directions
