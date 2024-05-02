@@ -1,0 +1,32 @@
+# Learning Llamas (Team 2) Meeting
+## combined-meeting-3
+## 6/07/2023, 3:00-5:00pm CSE basement
+---
+## Attendance
+- [x] Aaron
+- [x] Ian
+- [x] Jane
+- [x] Preston
+- [x] Zheng 
+- [x] Daniel 
+- [x] Fuyao 
+- [x] Leon
+- [x] Zichen
+
+## Updates:
+# Frontend
+* Styling has been updated
+
+# Backend
+* Backend functions are fully functional
+* Unit and integration tests are working
+
+## Current Progress
+* Main fortune text contained within a text box
+* Card flipping functional and text contained within cards
+* Display page functional when display button from history is clicked
+* Make the history page display vertically
+
+## Next steps:
+* Next meeting 06-06-2023 
+* Final Build should be done, work on polishing up the code
