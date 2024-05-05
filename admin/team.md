@@ -1,12 +1,11 @@
-<h1 align="center">Hi 👋, we are the Learning Llamas</h1>
-<h3 align="center">Learning from failures, striving for excellence</h3>
+<h1 align="center">Hi 👋, we are The Water Boys</h1>
 
 <p align="center">
-  <img src="./branding/logo_fat.jpg" alt="Logo" width="400">
+  <img src="./branding/water_boys.jpeg" alt="Logo" width="400">
 </p>
 
-- 👯 Team Members
-- [Zheng]() (Designer): 
+## Team Members ##
+- [Zheng]() (Designer): Fourth year, Computer Science
 
 - [Arjun]() (Leader): Third year, Computer Science
 
@@ -14,14 +13,14 @@
 
 - [Chris]() (Designer): Fourth year, Computer Engineering
 
-- [Torin]() (Developer): 
+- [Torin]() (Developer): Fourth year, Computer Science
 
-- [Chia-Han]() (Developer):
+- [Chia-Han]() (Developer): Fourth year, Computer Science
 
-- [Varun]() (Developer):
+- [Varun]() (Developer): Fourth year, Math-Computer Science
 
 - [Arian]() (Leader): 
 
 - [Hieu]() (Developer):
 
-- [Salam]() (Developer):
+- [Salam]() (Developer): Third year, Math-Computer Science
