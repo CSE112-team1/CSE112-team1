@@ -2,7 +2,7 @@
 
 [Meet our team!](admin/team.md)
 
-[Try our app!](https://github.com/CSE112-team1/CSE112-team1/blob/a36b8792628d9f47597c629f2dfc312a2acec20d/source/index.html)
+[Try our app!](https://cse112-team1.github.io/cse112-team1/source/index.html)
 
 ## In Progress Feature List ##
 
