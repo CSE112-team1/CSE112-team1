@@ -19,8 +19,8 @@
 
 - [Varun]() (Developer): Fourth year, Math-Computer Science
 
-- [Arian]() (Leader): 
+- [Arian]() (Leader):  Fourth year, Computer Engineering
 
-- [Hieu]() (Developer):
+- [Hieu]() (Developer): Fourth year, Computer Engineering
 
 - [Salam]() (Developer): Third year, Math-Computer Science
