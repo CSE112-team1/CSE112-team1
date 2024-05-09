@@ -1,12 +1,34 @@
-/* Sets the background color of the entire HTML document */
-html {
-    background-color: #56baed;
+/* Full-screen background setup */
+.background {
+    position: fixed; /* Use fixed or absolute depending on use case */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("./images/cloud.png");
+    background-repeat: repeat-x;
+    background-color: #bfdfec;
+    animation: movement 10s linear infinite;
+    z-index: -1;
+    filter: blur(8px);
 }
 
 /* Sets default styles for the body, including the font family, making it fill the entire height of the viewport */
 body {
     font-family: sans-serif;
     height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Cloud movement */
+@keyframes movement {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 560px 0;
+    }
 }
 
 /* A global setting to ensure that all elements consider border and padding as part of their defined width and height */
