@@ -55,7 +55,7 @@ h2.active {
 }
 
 /* FORM BLOCK */
-#formBlock {
+#form-block {
     background: white;
     padding: 30px;
     width: 90%;
@@ -127,11 +127,11 @@ input[type=text]:placeholder {
     margin-bottom: 0;   
 }
 
-.underlineHover:hover {
+.underline-hover:hover {
     color: #0d0d0d;
 }
 
-.underlineHover:after {
+.underline-hover:after {
   display: block;
   left: 0;
   bottom: -10px;
@@ -141,8 +141,8 @@ input[type=text]:placeholder {
   content: "";
   transition: width 0.2s;
 }
-  
-.underlineHover:hover:after{
+
+.underline-hover:hover:after{
     width: 100%;
 }
   
