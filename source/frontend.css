@@ -1,0 +1,148 @@
+/* Sets the background color of the entire HTML document */
+html {
+    background-color: #56baed;
+}
+
+/* Sets default styles for the body, including the font family, making it fill the entire height of the viewport */
+body {
+    font-family: sans-serif;
+    height: 100vh;
+}
+
+/* A global setting to ensure that all elements consider border and padding as part of their defined width and height */
+* {
+    box-sizing: border-box;
+}
+
+/* Styles for h2(Sign in/Sign up), setting text alignment, size, weight, transformations, margins, and color */
+h2 {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    display:inline-block;
+    margin: 40px 8px 10px 8px; 
+    color: #cccccc;
+    cursor: pointer; /* Makes it clear they are clickable */
+
+}
+
+/* Wrapper styles to center and align the content vertically and horizontally within it */
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 20px;
+}
+
+/* Styles for inactive tab headings, setting the color */
+h2.inactive {
+    color: #cccccc;
+}
+
+/* Styles for active tab headings, setting the color and a bottom border to indicate it is active */
+h2.active {
+    color: black;
+    border-bottom: 2px solid #5fbae9;
+}
+
+*:focus {
+    outline: none;
+    box-shadow: 0 0 3px #666;
+}
+
+/* FORM BLOCK */
+#formBlock {
+    background: white;
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    padding: 0px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    /* text-align: center; */
+
+}
+
+a {
+    color: #92badd;
+    display:inline-block;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+/* FORM TYPOGRAPHY */
+#formFooter {
+    padding-bottom: 25px;
+    text-align: center;
+}
+
+input[type=text], input[type=password] {
+    background-color: #f6f6f6;
+    color: #0d0d0d;
+    padding: 15px 32px; /* size of the input box */
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    width: 85%;
+    border: 2px solid #f6f6f6;
+    border-radius: 5px 5px 5px 5px;
+}
+
+
+input[type=submit] {
+    background-color: #56baed;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    padding: 15px 65px;
+    font-size: 13px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    margin: 5px 20px 30px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #3a9fd3; /* Darker shade of blue for hover effect */
+}
+
+input[type=text]:placeholder {
+    color: #cccccc;
+}
+
+/* Container for the buttons */
+.form-buttons {
+    display: flex; /* Enables flexbox */
+    justify-content: space-between; /* Distributes space evenly around the items */
+    margin-top: 20px; /* Adds some space above the button container */
+    margin-bottom: 0;   
+}
+
+.underlineHover:hover {
+    color: #0d0d0d;
+}
+
+.underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #56baed;
+  content: "";
+  transition: width 0.2s;
+}
+  
+.underlineHover:hover:after{
+    width: 100%;
+}
+  
