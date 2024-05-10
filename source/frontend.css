@@ -167,4 +167,26 @@ input[type=text]:placeholder {
 .underline-hover:hover:after{
     width: 100%;
 }
+
+.wrapper {
+    position: relative;
+    text-align: center; /* Centers the signin/signup tabs */
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: center; /* This will center the button(s) */
+}
+
+.tab {
+    cursor: pointer; /* Changes cursor to pointer on hover over tabs */
+}
+
+.active {
+    color: blue; /* Active tab color */
+}
+
+.inactive {
+    color: grey; /* Inactive tab color */
+}
   

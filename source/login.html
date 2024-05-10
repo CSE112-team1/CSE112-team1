@@ -13,8 +13,8 @@
     <div class="wrapper container">
         <div id="form-block">
             <!-- Tabs Titles -->
-            <h2 class="active">Sign In</h2>
-            <h2 class="inactive underline-hover">Sign Up</h2>
+            <h2 id="signin-tab" class="active tab" onclick="toggleForm('signin')">Sign In</h2>
+            <h2 id="signup-tab" class="inactive tab underline-hover" onclick="toggleForm('signup')">Create Account</h2>
 
             <!-- Login Form -->
             <form>
@@ -22,8 +22,8 @@
                 <input type="password" id="password" name="password" placeholder="password">
                 <!-- Buttons -->
                 <div class="form-buttons">
-                    <input type="submit" value="Log In">
-                    <input type="submit" value="Sign Up">
+                    <input type="submit" id="login-button" value="Log In">
+                    <input type="submit" id="signup-button" value="Sign Up" style="display: none;">
                 </div>
             </form>
 
@@ -33,6 +33,27 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleForm(formType) {
+            const loginButton = document.getElementById('login-button');
+            const signupButton = document.getElementById('signup-button');
+            const signinTab = document.getElementById('signin-tab');
+            const signupTab = document.getElementById('signup-tab');
+
+            if (formType === 'signin') {
+                loginButton.style.display = 'block';
+                signupButton.style.display = 'none';
+                signinTab.classList.add('active');
+                signupTab.classList.remove('active');
+            } else {
+                loginButton.style.display = 'none';
+                signupButton.style.display = 'block';
+                signupTab.classList.add('active');
+                signinTab.classList.remove('active');
+            }
+        }
+    </script>
 </body>
 
 </html>
