@@ -189,4 +189,21 @@ input[type=text]:placeholder {
 .inactive {
     color: grey; /* Inactive tab color */
 }
-  
+
+/* Standardizes size and appearance of both buttons */
+#login-button, #signup-button {
+    width: 150px;   /* Specifies a fixed width */
+    height: 40px;   /* Specifies a fixed height */
+    font-size: 16px; /* Adjust font size as needed */
+    margin: 10px; /* Adds some space around the button */
+    cursor: pointer; /* Makes it clear the buttons are clickable */
+    background-color: #4CAF50; /* Green background color for buttons */
+    color: white; /* White text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Hover effect for buttons */
+#login-button:hover, #signup-button:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+}
