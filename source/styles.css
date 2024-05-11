@@ -58,6 +58,7 @@ h1 {
   font-weight: 400;
   font-size: 80px;
   line-height: 97px;
+  cursor: pointer;
 }
 
 h2 {
@@ -126,7 +127,7 @@ button:focus {
 }
 
 /* || Navigation Section */
-.nav {
+nav {
   display: inline-flex;
   position: relative;
   overflow: hidden;
@@ -181,12 +182,6 @@ button:focus {
   border-radius: 8px 8px 0 0;
 }
 
-@media (max-width: 580px) {
-  .nav {
-    overflow: auto;
-  }
-}
-
 /* || Question Selector */
 #question-list {
   margin-top: 0;
@@ -195,6 +190,7 @@ button:focus {
   color: #83818c;
   font-weight: bold;
   border-radius: 30px;
+  max-width: 95vw;
 }
 
 /* || Meaning Display */
@@ -259,12 +255,11 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;
-  width: 750px;
+  margin: 2vh 0;
+  width: 100%;
 }
 
 .cardflip {
-  width: 99%;
   cursor: pointer;
   transition: transform 0.6s;
   transform-style: preserve-3d;
@@ -393,6 +388,7 @@ textarea {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 99vw;
 }
 
 .to-show {
@@ -401,4 +397,188 @@ textarea {
 
 .to-show.show {
   display: block;
+}
+
+@media screen and (max-width: 1050px) {
+  .card-container {
+    justify-content: space-evenly;
+  }
+
+  #display-img-left, #display-img-mid, #display-img-right {
+    width: 240px;
+    height: 308px;
+  }
+  #display-back-left, #display-back-mid, #display-back-right {
+    width: 240px;
+    height: 308px;
+  }
+}
+
+@media screen and (max-width: 968px) {
+  h1 {
+    font-size: 7.5rcap;
+  }
+
+  #display-img-left, #display-img-mid, #display-img-right {
+    width: 200px;
+    height: 256px;
+  }
+
+  #display-back-left, #display-back-mid, #display-back-right {
+    width: 200px;
+    height: 256px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  h1 {
+    font-size: 6rcap;
+  }
+
+  #display-img-left, #display-img-mid, #display-img-right {
+    width: 150px;
+    height: 167px;
+  }
+
+  #display-back-left, #display-back-mid, #display-back-right {
+    width: 150px;
+    height: 167px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 4.5rcap;
+  }
+
+  nav {
+    margin-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .nav-item {
+    padding: 15px;
+    margin: 0 4px;
+  }
+
+  .card-container {
+    margin-top: 20px;
+  }
+
+  #display-img-left, #display-img-mid, #display-img-right {
+    width: 100px;
+    height: 128px;
+    border-radius: 10px;
+  }
+
+  #display-back-left, #display-back-mid, #display-back-right {
+    width: 100px;
+    height: 128px;
+    border-radius: 10px;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  h1 {
+    font-size: 3.5rcap;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  nav {
+    margin-top: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .nav-item {
+    padding: 15px;
+    margin: 0 4px;
+  }
+
+  #display-img-left, #display-img-mid, #display-img-right {
+    width: 75px;
+    height: 96px;
+    border-radius: 8px;
+  }
+
+  #display-back-left, #display-back-mid, #display-back-right {
+    width: 75px;
+    height: 96px;
+    border-radius: 8px;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  #question-list {
+    font-size: xx-small;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  h1 {
+    font-size: 2.4rcap;
+  }
+
+  .nav-item {
+    padding: 10px;
+    margin: 0 3px;
+    font-size: 1.5rcap;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  #display-img-left, #display-img-mid, #display-img-right {
+    width: 50px;
+    height: 64px;
+  }
+
+  #display-back-left, #display-back-mid, #display-back-right {
+    width: 50px;
+    height: 64px;
+  }
+}
+
+@media screen and (max-width: 255px) {
+  h1 {
+    font-size: 1.4rcap;
+  }
+
+  .nav-item {
+    padding: 10px;
+    margin: 0 3px;
+    font-size: 1rcap;
+  }
+}
+
+@media screen and (max-width: 190px) {
+  nav {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .nav-item {
+    padding: 6px;
+    margin: 0 3px;
+    font-size: 0.4rcap;
+  }
+
+  #display-img-left, #display-img-mid, #display-img-right {
+    width: 30px;
+    height: 38px;
+    border-radius: 3px;
+  }
+
+  #display-back-left, #display-back-mid, #display-back-right {
+    width: 30px;
+    height: 38px;
+    border-radius: 3px;
+  }
+}
+
+@media screen and (max-width: 160px) {
+  h1 {
+    font-size: 1.2rcap;
+  }
 }
