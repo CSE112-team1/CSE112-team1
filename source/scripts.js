@@ -1,3 +1,5 @@
+
+
 // The current reading object displayed on the page
 let currentReading = {};
 
@@ -280,7 +282,7 @@ function init() {
     question.text = predefinedQuestions[i];
     selectMenu.appendChild(question);
   }
-  
+
   // Add event listeners to buttons
   document.getElementById('generate-btn').addEventListener('click', generateHandler);
   document.getElementById('save').addEventListener('click', saveHandler);
@@ -351,7 +353,7 @@ function displayHomeScreen() {
   // show generate button and question list
   document.getElementById('fortune-generating').hidden = false;
 
-  
+
   // unflip cards and disable flipping
   allowCardFlips = false;
   let cardFlips = document.querySelectorAll('.cardflip');
@@ -401,7 +403,7 @@ function displayReading(isFromHistory) {
     // hide save button
     document.getElementById('save').hidden = true;
   }
-  
+
   const firstCardMeaning = document.querySelector('.cardmeaning');
   const secondCardMeaing = document.querySelectorAll('.cardmeaning')[1];
   const thirdCardMeaning = document.querySelectorAll('.cardmeaning')[2];
@@ -632,7 +634,7 @@ function renameReading(name, id) {
       break;
     }
   }
-  
+
   saveReadings(readings);
 }
 

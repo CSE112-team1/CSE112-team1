@@ -4,7 +4,7 @@
   "description": "We are creating a web-app incorporating generative AI.",
   "scripts": {
     "test": "npx jest --config jest.config.unit.js && npx jest --config jest.config.integration.js",
-    "lint": "docker run -e RUN_LOCAL=true -e USE_FIND_ALGORITHM=true -e FILTER_REGEX_EXCLUDE=\".* images/.*\" -e FILTER_REGEX_INCLUDE=\".*source/.*\" -e LINTER_RULES_PATH=\"/\" -e JAVASCRIPT_ES_CONFIG_FILE=\".eslintrc.json\" -e VALIDATE_JAVASCRIPT_STANDARD=false -v %cd%:/tmp/lint github/super-linter",
+    "lint": "eslint --fix --ext .js,.jsx .",
     "auto-lint-js": "npx eslint ./source/**/*.js --fix",
     "start-server": "npx http-server -p 5500",
     "coverage": "jest --collect-coverage"
