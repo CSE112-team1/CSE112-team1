@@ -6,7 +6,8 @@
     "test": "npx jest --config jest.config.unit.js && npx jest --config jest.config.integration.js",
     "lint": "eslint --fix --ext .js,.jsx .",
     "auto-lint-js": "npx eslint ./source/**/*.js --fix",
-    "start-server": "npx http-server -p 5500"
+    "start-server": "npx http-server -p 5500",
+    "coverage": "jest --collect-coverage"
   },
   "author": "cse110-sp23-group02",
   "license": "ISC",
