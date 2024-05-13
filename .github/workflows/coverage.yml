@@ -1,4 +1,4 @@
-name: Jest Tests
+name: Coverage Tests
 
 on:
   push:
@@ -26,7 +26,6 @@ jobs:
           npm run start-server & # Run the server as a background process
           sleep 5 # Give the server time to start
           echo "Local server started"
-
-      - name: Jest
-        id: jest
-        run: npm run test
+        
+      - name: Run coverage
+        run: yarn coverage
