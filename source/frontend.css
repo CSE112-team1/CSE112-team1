@@ -104,7 +104,7 @@ a {
     text-align: center;
 }
 
-input[type=text], input[type=password] {
+input[type=email], input[type=password] {
     background-color: #f6f6f6;
     color: #0d0d0d;
     padding: 15px 32px; /* size of the input box */
