@@ -17,6 +17,28 @@ body {
   animation: movement 10s linear infinite;
 }
 
+/* Login/Signup */
+.cloud-link-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+}
+
+.cloud-link {
+  display: inline-block;
+  padding: 30px 22px;
+  font-size: 16px;
+  color: #a0c4ff;;
+  background-image: url("./images/logincloud.jpg");
+  background-size: 100% auto;
+  background-position: center;
+  border: none;
+  text-decoration: none;
+  position: relative;
+}
+
+
 /* Cloud movement */
 @keyframes movement {
   0% {
@@ -73,22 +95,24 @@ h3 {
   color: black;
   margin-top: 5%;
   font-size: x-large;
-  margin-right: 10px;
   text-shadow: 2px 2px #687bd2;
 }
 
 p {
   color: white;
-  text-shadow: 2px 2px #687bd2;
   font-weight: 400;
   font-size: 20px;
   line-height: 32px;
 }
 
+#meaning-section {
+  padding: 0 5vw;
+}
+
 /* || Buttons */
 button {
   background-image: linear-gradient(to right, #70c4e9, #6b99e9, #04befe, #72a2ea);
-  box-shadow: 0 4px 15px 0 rgba(65 132 234 75%);
+  box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 75%);
   text-align: center;
   width: 80px;
   font-size: 16px;
@@ -117,6 +141,12 @@ button:focus {
 }
 
 #generate-btn {
+  margin-top: 25px;
+  width: 120px;
+  height: 33px;
+}
+
+#daily-generate-btn {
   margin-top: 25px;
   width: 120px;
   height: 33px;
@@ -196,7 +226,7 @@ nav {
 /* || Meaning Display */
 #meaning {
   display: flex;
-  width: 750px;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -409,12 +439,38 @@ textarea {
     height: 308px;
   }
   #display-back-left, #display-back-mid, #display-back-right {
+    width: 297px;
+    height: 331px;
+  }
+
+  .card-text {
     width: 240px;
-    height: 308px;
+  }
+
+  textarea {
+    width: 95%;
+    height: 90%;
+    padding: 2px;
+  }
+
+  .card-title {
+    font-size: medium;
+    text-shadow: 1.7px 1.7px #687bd2;
   }
 }
 
 @media screen and (max-width: 968px) {
+
+.cloud-link {
+    font-size: 14px;
+    padding: 27px 20px; 
+    background-size: 100% auto;
+}
+.cloud-link-container {
+    top: 10px;
+    right: 10px;
+}
+
   h1 {
     font-size: 7.5rcap;
   }
@@ -425,12 +481,39 @@ textarea {
   }
 
   #display-back-left, #display-back-mid, #display-back-right {
+    width: 247px;
+    height: 275px;
+  }
+
+  .card-text {
     width: 200px;
-    height: 256px;
+  }
+
+  textarea {
+    font-size: xx-small;
+  }
+
+  .card-title {
+    font-size: x-small;
+    text-shadow: 1.3px 1.3px #687bd2;
   }
 }
 
-@media screen and (max-width: 750px) {
+/*
+ * start using html <dialog> for card meaning
+ */
+@media screen and (max-width: 755px) {
+
+.cloud-link {
+    font-size: 11px;
+    padding: 22px 17px; 
+    background-size: 100% auto;
+}
+.cloud-link-container {
+    top: 5px;
+    right: 5px;
+}
+
   h1 {
     font-size: 6rcap;
   }
@@ -444,9 +527,19 @@ textarea {
     width: 150px;
     height: 167px;
   }
+
+  .card-text {
+    width: 150px;
+  }
+
+  textarea {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 @media screen and (max-width: 600px) {
+
   h1 {
     font-size: 4.5rcap;
   }
@@ -480,12 +573,23 @@ textarea {
 }
 
 @media screen and (max-width: 470px) {
+  .cloud-link {
+    font-size: 9px;
+    padding: 20px 18px; 
+    background-size: 100% auto;
+}
+  .cloud-link-container {
+    top:  3px;
+    right: 3px;
+  }
+
   h1 {
     font-size: 3.5rcap;
   }
 }
 
 @media screen and (max-width: 460px) {
+
   nav {
     margin-top: 15px;
     padding-left: 30px;

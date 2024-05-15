@@ -1,5 +1,3 @@
-
-
 // The current reading object displayed on the page
 let currentReading = {};
 
@@ -282,11 +280,12 @@ function init() {
     question.text = predefinedQuestions[i];
     selectMenu.appendChild(question);
   }
-
+  
   // Add event listeners to buttons
   document.getElementById('generate-btn').addEventListener('click', generateHandler);
   document.getElementById('save').addEventListener('click', saveHandler);
   document.getElementById('nav-btn-history').addEventListener('click', displayHistoryScreen);
+  document.getElementById('nav-btn-daily-fortune').addEventListener('click', displayDailyFortuneScreen);
   document.getElementById('nav-btn-home').addEventListener('click', displayHomeScreen);
   document.getElementById('popup-close-btn').addEventListener('click', closePopup);
 
@@ -299,6 +298,19 @@ function init() {
 
   // Setup card flipping functionality
   setupCardFlips();
+
+  // if screen is resized
+  // eslint-disable-next-line no-undef
+  window.addEventListener('resize', () => {
+    // eslint-disable-next-line no-undef
+    if (window.innerWidth < 755) {
+      // flip all the cards back
+      const cardFlips = document.querySelectorAll('.cardflip');
+      cardFlips.forEach(function (cardFlip) {
+        cardFlip.classList.toggle('flipped', false);
+      });
+    }
+  });
 }
 
 /**
@@ -353,7 +365,10 @@ function displayHomeScreen() {
   // show generate button and question list
   document.getElementById('fortune-generating').hidden = false;
 
+  document.getElementById('daily-fortune-section').hidden = true;
 
+
+  
   // unflip cards and disable flipping
   allowCardFlips = false;
   let cardFlips = document.querySelectorAll('.cardflip');
@@ -362,6 +377,40 @@ function displayHomeScreen() {
   });
 }
 
+
+/**
+ * Daily fortune display function
+ * This function will hide all html elements that we do not want shown on the daily fortune screen,
+ * and show all elements which we do want displayed
+ */
+function displayDailyFortuneScreen() {
+  // hide history section
+  document.getElementById('history-section').hidden = true;
+  // change card images back to their defaults
+  document.getElementById('display-img-left').src = './images/default-card.jpeg';
+  document.getElementById('display-img-mid').src = './images/default-card.jpeg';
+  document.getElementById('display-img-right').src = './images/default-card.jpeg';
+
+
+  // hide save button and fortune meaning
+  document.getElementById('meaning-section').hidden = true;
+  document.getElementById('save').hidden = true;
+
+  // show card images
+  document.querySelector('.card-container').style.display = 'flex';
+
+  // show generate button and question list
+  document.getElementById('fortune-generating').hidden = true;
+
+  document.getElementById('daily-fortune-section').hidden = false;
+
+  // unflip cards and disable flipping
+  allowCardFlips = false;
+  let cardFlips = document.querySelectorAll('.cardflip');
+  cardFlips.forEach(function (cardFlip) {
+  cardFlip.classList.toggle('flipped', false);
+});
+}
 /**
  * History screen display function
  * This function will hide all html elements that we do not want shown on the history screen,
@@ -403,7 +452,7 @@ function displayReading(isFromHistory) {
     // hide save button
     document.getElementById('save').hidden = true;
   }
-
+  
   const firstCardMeaning = document.querySelector('.cardmeaning');
   const secondCardMeaing = document.querySelectorAll('.cardmeaning')[1];
   const thirdCardMeaning = document.querySelectorAll('.cardmeaning')[2];
@@ -535,8 +584,56 @@ function setupCardFlips() {
   let cardFlips = document.querySelectorAll('.cardflip');
   cardFlips.forEach(function (cardFlip) {
     cardFlip.addEventListener('click', function () {
+      // eslint-disable-next-line no-undef
       if (allowCardFlips) {
-        this.classList.toggle('flipped');
+        // eslint-disable-next-line no-undef
+        if (window.innerWidth >= 755) {
+          this.classList.toggle('flipped');
+        }
+        else {
+          // get card title and card meaning
+          const card_title = cardFlip.children[1].children[1].firstElementChild.innerText;
+          const card_meaning = cardFlip.children[1].children[1].children[1].value;
+          // create an html dialog element
+          const card_meaning_dialog = document.createElement ('dialog');
+          card_meaning_dialog.style.setProperty('margin', 'auto');
+          card_meaning_dialog.style.setProperty('padding', '1em');
+          card_meaning_dialog.style.setProperty('max-width', '80vw');
+          card_meaning_dialog.style.setProperty('max-height', '80vh');
+          card_meaning_dialog.style.setProperty('border-radius', '10px');
+          card_meaning_dialog.style.setProperty('background-color', '#ccedfa');
+          document.body.appendChild (card_meaning_dialog);
+          card_meaning_dialog.showModal ();
+          document.body.style.overflow = 'hidden';
+
+          const close_btn = document.createElement('div');
+          close_btn.style.display = 'flex';
+          close_btn.style.justifyContent = 'flex-end';
+          close_btn.style.alignItems = 'center';
+          close_btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960"\n' +
+              '                                             width="24" fill="#949895">\n' +
+              '                    <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 ' +
+              '224-56 56-224-224-224 224Z"/></svg>' +
+              '</div>';
+          close_btn.addEventListener ('click', () => {
+            card_meaning_dialog.close ();
+            document.body.removeChild (card_meaning_dialog);
+            document.body.style.overflow = 'scroll';
+          });
+          close_btn.style.cursor = 'pointer';
+          card_meaning_dialog.appendChild (close_btn);
+
+          const div = document.createElement ('div');
+          div.style.setProperty('display', 'block');
+          div.style.setProperty('margin-block-start', '1em');
+          div.style.setProperty('margin-block-end', '1em');
+          div.style.setProperty('margin-inline-start', '0');
+          div.style.setProperty('margin-inline-end', '0');
+          div.style.setProperty('padding', '0 20px');
+
+          div.innerHTML = `<h3 style="text-align: center">${card_title}</h3><p style="color:black;">${card_meaning}</p>`;
+          card_meaning_dialog.appendChild (div);
+        }
       }
     });
   });
@@ -634,7 +731,7 @@ function renameReading(name, id) {
       break;
     }
   }
-
+  
   saveReadings(readings);
 }
 
