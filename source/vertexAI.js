@@ -16,14 +16,19 @@ const firebaseApp = initializeApp(firebaseConfig);
 const vertexAI = getVertexAI(firebaseApp);
 const model = getGenerativeModel(vertexAI, {model:'gemini-1.0-pro'});
 
-async function generateDailyFortune() {
-    const prompt = 'What is the largest continent?';
+
+
+export async function generateDailyFortune(card1, card2, card3) {
+    const prompt = `Create a daily fortune based on these three tarot cards: ${card1}, ${card2}, ${card3}. Answer in 40 words or less.`;
+
+
 
     const result = await model.generateContent(prompt);
 
     const response = result.response;
     const text = response.text();
     console.log(text);
+    return text;
 }
 
-generateDailyFortune();
+generateDailyFortune('Death', 'Wheel of Fortune', 'Justice');
