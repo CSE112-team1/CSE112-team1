@@ -8,7 +8,7 @@ import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/fir
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: 'AIzaSyAg-V91iKbuab9_xlFqMLFVIDmLmJ_5WrE',
   authDomain: 'cse-112-tarot-card-reader.firebaseapp.com',
   projectId: 'cse-112-tarot-card-reader',
   storageBucket: 'cse-112-tarot-card-reader.appspot.com',
@@ -18,7 +18,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
 //sign-in button
