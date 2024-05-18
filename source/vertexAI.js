@@ -21,8 +21,6 @@ const model = getGenerativeModel(vertexAI, {model:'gemini-1.0-pro'});
 export async function generateDailyFortune(card1, card2, card3) {
     const prompt = `Create a daily fortune based on these three tarot cards: ${card1}, ${card2}, ${card3}. Answer in 40 words or less.`;
 
-
-
     const result = await model.generateContent(prompt);
 
     const response = result.response;
