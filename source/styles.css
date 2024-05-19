@@ -166,7 +166,7 @@ nav {
   background-color: #fff;
   padding: 0 40px;
   border-radius: 40px;
-  box-shadow: 0 10px 40px rgba(159 162 177 80%);
+  box-shadow: 0 10px 40px rgba(159, 162, 177, 80%);
 }
 
 .nav-item {
@@ -180,7 +180,7 @@ nav {
   position: relative;
 }
 
-.nav-item::before {
+.nav-item::before, .active::before {
   content: "";
   position: absolute;
   bottom: -6px;
@@ -193,12 +193,12 @@ nav {
   transition: 0.3s;
 }
 
-.nav-item:not(.is-active):hover::before {
+.nav-item:not(.is-active):hover::before, .active::before {
   opacity: 1;
   bottom: 0;
 }
 
-.nav-item:not(.is-active):hover {
+.nav-item:not(.is-active):hover, .active::before {
   color: #333;
 }
 
@@ -397,7 +397,7 @@ textarea {
   background-color: #bfdfec;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0 0 0 30%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 30%);
 }
 
 .popup-box input {

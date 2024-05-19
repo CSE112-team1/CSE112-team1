@@ -365,6 +365,14 @@ function saveHandler() { // eslint-disable-line no-unused-vars
  * and show all elements which we do want displayed
  */
 function displayHomeScreen() {
+  // remove active class from all tabs
+  for (const tab of document.querySelectorAll('.nav-item')) {
+    tab.classList.remove('active');
+  }
+
+  // make daily fortune tab active
+  document.getElementById('nav-btn-home').classList.add('active');
+
   // hide history section
   document.getElementById('history-section').hidden = true;
 
@@ -443,8 +451,16 @@ function displayDailyFortuneScreen() {
   allowCardFlips = false;
   let cardFlips = document.querySelectorAll('.cardflip');
   cardFlips.forEach(function (cardFlip) {
-  cardFlip.classList.toggle('flipped', false);
-});
+    cardFlip.classList.toggle('flipped', false);
+  });
+
+  // remove active class from all tabs
+  for (const tab of document.querySelectorAll('.nav-item')) {
+    tab.classList.remove('active');
+  }
+
+  // make daily fortune tab active
+  document.getElementById('nav-btn-daily-fortune').classList.add('active');
 }
 /**
  * History screen display function
@@ -453,6 +469,14 @@ function displayDailyFortuneScreen() {
  * For this screen, we only want history related items, all others buttons/images should be hidden
  */
 function displayHistoryScreen() { // eslint-disable-line no-unused-vars
+  // remove active class from all tabs
+  for (const tab of document.querySelectorAll('.nav-item')) {
+    tab.classList.remove('active');
+  }
+
+  // make history tab active
+  document.getElementById('nav-btn-history').classList.add('active');
+
   // show history section
   document.getElementById('history-section').hidden = false;
 
