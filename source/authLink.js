@@ -4,7 +4,7 @@ import firebaseApp from './firebaseInit.js';
 // Access initialized Firebase App
 const app = firebaseApp;
 
-const authLink = document.getElementById('authLink');
+const authLink = document.getElementById('authlink');
 
 /**
  * EventListener for the Login/SignOut button. Redirects to the login page if the user is logged out
@@ -18,6 +18,7 @@ authLink.addEventListener('click', function(event) {
         if(user) {
             signOut(auth)
                 .then(() => {
+                    alert('Successfully signed out!');
                     window.location.reload(); //eslint-disable-line
                 })
                 .catch((error) => {
