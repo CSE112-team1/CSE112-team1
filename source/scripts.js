@@ -480,7 +480,7 @@ function displayHistoryScreen() { // eslint-disable-line no-unused-vars
   // show history section
   document.getElementById('history-section').hidden = false;
 
-  //hide card images
+  // hide card images
   document.querySelector('.card-container').style.display = 'none';
 
   // hide save button and fortune meaning
@@ -489,6 +489,9 @@ function displayHistoryScreen() { // eslint-disable-line no-unused-vars
 
   // hide generate button and question list
   document.getElementById('fortune-generating').hidden = true;
+
+  // hide daily generate button
+  document.getElementById('daily-fortune-section').hidden = true;
 }
 
 /**
