@@ -1,3 +1,7 @@
+
+import { getAuth } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js';
+import firebaseApp from './firebaseInit.js';
+
 // The current reading object displayed on the page
 let currentReading = {};
 
@@ -311,6 +315,7 @@ function init() {
       });
     }
   });
+
 }
 
 /**
@@ -384,14 +389,23 @@ function displayHomeScreen() {
  * and show all elements which we do want displayed
  */
 function displayDailyFortuneScreen() {
-  const auth = getAuth();
-  if (!auth.currentUser) {
-    document.getElementById('login-popup').style.display = 'flex';  // Show the login popup if not logged in
+  const app = firebaseApp;
+  const auth = getAuth(app);
+  auth.onAuthStateChanged(user => {
+    if(!user) {
+      window.location.href = 'login.html'; //eslint-disable-line
+    } else {
+      console.log(user);
+    }
+  });
+  /*if (!auth.currentUser) {
+    console.log('Not logged in');
+    //document.getElementById('login-popup').style.display = 'flex';  // Show the login popup if not logged in
     return;  // Stop the function if not logged in
-  }
+  }*/
 
   // If logged in, hide the popup if it was previously shown
-  document.getElementById('login-popup').style.display = 'none';
+  //document.getElementById('login-popup').style.display = 'none';
   // hide history section
   document.getElementById('history-section').hidden = true;
   // change card images back to their defaults
