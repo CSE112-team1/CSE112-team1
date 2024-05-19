@@ -10,10 +10,14 @@
 </head>
 
 <body>
+
+    <script type="module" src="firebaseInit.js"></script>
     <!-- Login/Signup -->
     <div class="cloud-link-container">
-        <a href="login.html" class="cloud-link">Login/Signup</a>
+        <a href="#" id="authLink" class="cloud-link">Login/SignUp</a>
     </div>
+    <script type="module" src="authLink.js"></script>
+
 
     <!-- Title -->
     <h1>Tarot Card Reader</h1>
@@ -111,7 +115,7 @@
     </section>
 
     <!--Main Script File-->
-    <script src="scripts.js"></script>
+    <script type="module" src="scripts.js"></script>
 
     <!--Daily Fortune Error Popup-->
     <div id="signin-popup" class="popup-container">

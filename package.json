@@ -20,5 +20,6 @@
     "jest-environment-puppeteer": "^9.0.0",
     "jest-puppeteer": "^9.0.0",
     "jsdoc": "^4.0.2"
-  }
+  },
+  "type": "module"
 }
