@@ -393,45 +393,32 @@ function displayDailyFortuneScreen() {
   const auth = getAuth(app);
   auth.onAuthStateChanged(user => {
     if(!user) {
-      window.location.href = 'login.html'; //eslint-disable-line
+      console.log('NO')
+      document.getElementById('signin-popup').style.display = 'flex'; //eslint-disable-line
     } else {
-      console.log(user);
+      document.getElementById('history-section').hidden = true;
+      document.getElementById('display-img-left').src = './images/default-card.jpeg';
+      document.getElementById('display-img-mid').src = './images/default-card.jpeg';
+      document.getElementById('display-img-right').src = './images/default-card.jpeg';
+      document.getElementById('meaning-section').hidden = true;
+      document.getElementById('save').hidden = true;
+      document.querySelector('.card-container').style.display = 'flex';
+      document.getElementById('fortune-generating').hidden = true;
+      document.getElementById('daily-fortune-section').hidden = false;
+      allowCardFlips = false;
+      document.querySelectorAll('.cardflip').forEach(cardFlip => cardFlip.classList.toggle('flipped', false));
     }
   });
-  /*if (!auth.currentUser) {
-    console.log('Not logged in');
-    //document.getElementById('login-popup').style.display = 'flex';  // Show the login popup if not logged in
-    return;  // Stop the function if not logged in
-  }*/
-
-  // If logged in, hide the popup if it was previously shown
-  //document.getElementById('login-popup').style.display = 'none';
-  // hide history section
-  document.getElementById('history-section').hidden = true;
-  // change card images back to their defaults
-  document.getElementById('display-img-left').src = './images/default-card.jpeg';
-  document.getElementById('display-img-mid').src = './images/default-card.jpeg';
-  document.getElementById('display-img-right').src = './images/default-card.jpeg';
-
-
-  // hide save button and fortune meaning
-  document.getElementById('meaning-section').hidden = true;
-  document.getElementById('save').hidden = true;
-
-  // show card images
-  document.querySelector('.card-container').style.display = 'flex';
-
-  // show generate button and question list
-  document.getElementById('fortune-generating').hidden = true;
-
-  document.getElementById('daily-fortune-section').hidden = false;
-
-  // unflip cards and disable flipping
-  allowCardFlips = false;
-  let cardFlips = document.querySelectorAll('.cardflip');
-  cardFlips.forEach(function (cardFlip) {
-  cardFlip.classList.toggle('flipped', false);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const closeButton = document.getElementById('close-popup-btn');
+  if (closeButton) {
+      closeButton.addEventListener('click', closeSignInPopup);
+  }
 });
+
+function closeSignInPopup() {
+  document.getElementById('signin-popup').style.display = 'none';
 }
 /**
  * History screen display function
@@ -873,3 +860,4 @@ try {
 } catch {
   // do nothing, running in browser
 }
+
