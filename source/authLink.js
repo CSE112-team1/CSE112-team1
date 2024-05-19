@@ -1,4 +1,4 @@
-import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js';
+import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import firebaseApp from './firebaseInit.js';
 
 // Access initialized Firebase App

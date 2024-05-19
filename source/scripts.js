@@ -1,5 +1,5 @@
 
-import { getAuth } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js';
+import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import firebaseApp from './firebaseInit.js';
 
 // The current reading object displayed on the page
@@ -333,6 +333,19 @@ function generateHandler() { // eslint-disable-line no-unused-vars
 }
 
 /**
+ * Handler to populate content after generating AI response
+ * @param {string} text AI-generated interpretation of drawn cards
+ * @param drawnCards Randomly drawn cards from vertexAI
+ */
+export function generateAIHandler(text, drawnCards) {
+  const reading = text;
+  currentReading = generateAiReading(reading, drawnCards);
+  const isFromHistory = false;
+  displayReading(isFromHistory);
+  allowCardFlips = true;
+}
+
+/**
  * Handler for the save button on click.
  * Saves the current reading to the history.
  * Updates the history display.
@@ -459,7 +472,7 @@ function displayHistoryScreen() { // eslint-disable-line no-unused-vars
  * if the reading is selected from the history.
  * @param {boolean} isFromHistory True if the reading is from the history, false otherwise
  */
-function displayReading(isFromHistory) {
+export function displayReading(isFromHistory) {
   let imageLeft = document.getElementById('display-img-left');
   let imageMid = document.getElementById('display-img-mid');
   let imageRight = document.getElementById('display-img-right');
@@ -816,10 +829,34 @@ function generateReading(question) {
 }
 
 /**
+ * Creates a reading object from the user input text
+ * @param {string} genAnswer Daily fortune text returned by vertexAI
+ * @param {[]} drawnCards Randomized cards from drawing cards in vertexAI.js
+ * @returns {Object} The reading object for AI response
+ */
+function generateAiReading(genAnswer, drawnCards) {
+
+  let tarotReading = {
+    id: Date.now(),
+    name: new Date().toLocaleString(),
+    time: Date.now(),
+    cards: drawnCards,
+    fortune: genAnswer,
+    userInput: 'Today\'s Fortune',
+    pastMeaning: cardResponseData[drawnCards[0]].pastReading, // The meaning of the past card
+    presentMeaning: cardResponseData[drawnCards[1]].presentReading, // The meaning of the present card
+    futureMeaning: cardResponseData[drawnCards[2]].futureReading // The meaning of the future card
+  };
+
+  return tarotReading;
+
+}
+
+/**
  * Chooses 3 cards from the deck
  * @returns {Array} The array of the 3 selected card NAMES
  */
-function drawCards() {
+export function drawCards() {
   const cardsToDraw = 3;
 
   // Randomly selects 3 indexes (no duplicates)

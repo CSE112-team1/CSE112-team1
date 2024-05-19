@@ -7,7 +7,7 @@ name: Lint Code Base
 
 on:
   push:
-    branches: [dev, main,frontend-daily-login-page]
+    branches: [dev, main,US4-1-AI]
 
   pull_request:
     branches: [main]

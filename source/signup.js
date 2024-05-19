@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js';
+import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import firebaseApp from './firebaseInit.js';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
