@@ -332,6 +332,14 @@ function generateHandler() { // eslint-disable-line no-unused-vars
   allowCardFlips = true;
 }
 
+export function generateAIHandler(text) {
+  const reading = text;
+  currentReading = reading;
+  const isFromHistory = false;
+  displayReading(isFromHistory);
+  allowCardFlips = true;
+}
+
 /**
  * Handler for the save button on click.
  * Saves the current reading to the history.
@@ -459,7 +467,7 @@ function displayHistoryScreen() { // eslint-disable-line no-unused-vars
  * if the reading is selected from the history.
  * @param {boolean} isFromHistory True if the reading is from the history, false otherwise
  */
-function displayReading(isFromHistory) {
+export function displayReading(isFromHistory) {
   let imageLeft = document.getElementById('display-img-left');
   let imageMid = document.getElementById('display-img-mid');
   let imageRight = document.getElementById('display-img-right');
@@ -819,7 +827,7 @@ function generateReading(question) {
  * Chooses 3 cards from the deck
  * @returns {Array} The array of the 3 selected card NAMES
  */
-function drawCards() {
+export function drawCards() {
   const cardsToDraw = 3;
 
   // Randomly selects 3 indexes (no duplicates)
