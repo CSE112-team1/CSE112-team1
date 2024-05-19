@@ -1,5 +1,5 @@
 
-import { getAuth } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js';
+import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import firebaseApp from './firebaseInit.js';
 
 // The current reading object displayed on the page
@@ -332,9 +332,14 @@ function generateHandler() { // eslint-disable-line no-unused-vars
   allowCardFlips = true;
 }
 
-export function generateAIHandler(text) {
+/**
+ * Handler to populate content after generating AI response
+ * @param {string} text AI-generated interpretation of drawn cards
+ * @param drawnCards Randomly drawn cards from vertexAI
+ */
+export function generateAIHandler(text, drawnCards) {
   const reading = text;
-  currentReading = reading;
+  currentReading = generateAiReading(reading, drawnCards);
   const isFromHistory = false;
   displayReading(isFromHistory);
   allowCardFlips = true;
@@ -821,6 +826,30 @@ function generateReading(question) {
   };
 
   return tarotReading;
+}
+
+/**
+ * Creates a reading object from the user input text
+ * @param {string} genAnswer Daily fortune text returned by vertexAI
+ * @param {[]} drawnCards Randomized cards from drawing cards in vertexAI.js
+ * @returns {Object} The reading object for AI response
+ */
+function generateAiReading(genAnswer, drawnCards) {
+
+  let tarotReading = {
+    id: Date.now(),
+    name: new Date().toLocaleString(),
+    time: Date.now(),
+    cards: drawnCards,
+    fortune: genAnswer,
+    userInput: 'Today\'s Fortune',
+    pastMeaning: cardResponseData[drawnCards[0]].pastReading, // The meaning of the past card
+    presentMeaning: cardResponseData[drawnCards[1]].presentReading, // The meaning of the present card
+    futureMeaning: cardResponseData[drawnCards[2]].futureReading // The meaning of the future card
+  };
+
+  return tarotReading;
+
 }
 
 /**
