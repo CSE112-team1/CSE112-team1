@@ -279,8 +279,8 @@ const predefinedQuestionResponses = {
 function init() {
   // Add predefined questions to the questions list
   const selectMenu = document.getElementById('question-list');
-  for (var i = 0; i < predefinedQuestions.length; i++) {
-    var question = document.createElement('option');
+  for (let i = 0; i < predefinedQuestions.length; i++) {
+    let question = document.createElement('option');
     question.text = predefinedQuestions[i];
     selectMenu.appendChild(question);
   }
@@ -302,6 +302,9 @@ function init() {
 
   // Setup card flipping functionality
   setupCardFlips();
+
+  // update the sign in button
+  displayLoginButton();
 
   // if screen is resized
   // eslint-disable-next-line no-undef
@@ -462,6 +465,7 @@ function displayDailyFortuneScreen() {
   // make daily fortune tab active
   document.getElementById('nav-btn-daily-fortune').classList.add('active');
 }
+
 /**
  * History screen display function
  * This function will hide all html elements that we do not want shown on the history screen,
@@ -492,6 +496,25 @@ function displayHistoryScreen() { // eslint-disable-line no-unused-vars
 
   // hide daily generate button
   document.getElementById('daily-fortune-section').hidden = true;
+}
+
+function displayLoginButton() {
+  // the button element
+  const loginBtn = document.getElementById('authlink');
+
+  const app = firebaseApp;
+  const auth = getAuth(app);
+  // check user's sign in status
+  auth.onAuthStateChanged(user => {
+    if(!user) {
+      // user has not logged in
+      loginBtn.innerText = 'Login/Sign Up';
+    } else {
+      // user has logged in
+      loginBtn.innerText = 'Logout';
+    }
+  });
+
 }
 
 /**
