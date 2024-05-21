@@ -32,16 +32,20 @@ async function generateDailyFortune(card1, card2, card3) {
     //Call the cloud function to generate the fortune
     const functions = getFunctions();
     const genFortune = httpsCallable(functions, 'genFortune');
-    genFortune({cardindex1, cardindex2, cardindex3}).catch((error) => {
-        console.log('Fortune generation failed: ', error);
+    return genFortune({cardindex1, cardindex2, cardindex3}).then(
+        (result) => {
+            result.data;
+        }
+    ).catch((error) => {
+        console.log('Fortune generation failed, attempting direct ai response: ', error);
+        const result = aiModel.generateContent(prompt);
+
+        const response = result.response;
+        const text = response.text();
+        console.log(text);
+        return text;
     });
 
-    const result = await aiModel.generateContent(prompt);
-
-    const response = result.response;
-    const text = response.text();
-    console.log(text);
-    return text;
 }
 
 /**
