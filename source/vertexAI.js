@@ -1,6 +1,9 @@
 
 import {drawCards, generateAIHandler} from './scripts.js';
 import {model} from './firebaseInit.js';
+import {getFunctions, httpsCallable} from 'firebase/functions';
+import cards from './scripts.js';
+
 
 const aiModel = model;
 
@@ -15,6 +18,23 @@ const genButton = document.getElementById('daily-generate-btn');
  */
 async function generateDailyFortune(card1, card2, card3) {
     const prompt = `Create a fortune for the day based on these three tarot cards: ${card1}, ${card2}, ${card3}. Answer in 50 to 60 words.`;
+    //Serialize the three cards based on their index in the cards array
+    const cardindex1 = cards.indexOf(card1);
+    const cardindex2 = cards.indexOf(card2);
+    const cardindex3 = cards.indexOf(card3);
+
+    //Check if the cards are valid
+    if (cardindex1 === -1 || cardindex2 === -1 || cardindex3 === -1) {
+        console.log('Invalid card');
+        return;
+    }
+
+    //Call the cloud function to generate the fortune
+    const functions = getFunctions();
+    const genFortune = httpsCallable(functions, 'genFortune');
+    genFortune({cardindex1, cardindex2, cardindex3}).catch((error) => {
+        console.log('Fortune generation failed: ', error);
+    });
 
     const result = await aiModel.generateContent(prompt);
 
