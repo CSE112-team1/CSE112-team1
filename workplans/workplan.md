@@ -1,29 +1,32 @@
-# ***Workplan 3: 05/12/24***
+# ***Workplan 4: 05/19/24***
 
-## **Reflections from Sprint 1**:
+## **Reflections from Sprint 2**:
 
-- Slow development due to some starting troubles and some unexpected blockers due to unfamiliarity with the codebase.
+- Most stories from the previous sprint were closed, with the exception of a couple of small tasks. These tasks are planned to be finished during the early portions of the current sprint. 
 
-- We were unable to close any stories, but all of them are close to being finished.
+- Some test related tasks were closed without significant progess. A couple of factors lead to this decision:
+    - Some tasks could not be feasibly tested. 
+    - Testing is currently broken on the CI/CD pipeline. We are holding off on adding new tests until this can be fixed during this sprint. 
+    
+## **Changes for Sprint 3**:
 
-- We encountered some work inefficieny due to confusion about whether tasks had already been started. This can be remedied by updating the big board in a timely manner. 
+- While we planned to assign tasks specifically to individuals in the previous sprint, we did not go forward with this decision. Instead we only assigned individuals to to user stories and allowed tasks to be self assigned. This continued to cause some hesitiation to start tasks, so we are now specifically assigning tasks to individuals. 
 
+- Due to the large number of programmers on the team, we are comfortable continuing to assign the same priority to all the tasks. However, we will keep everyone aware on which tasks might benefit from being completed earlier or later in the sprint. Some examples are:
+    - Bugfixes and CI/CD changes being completed earlier in the sprint.
+    - Tasks the might require file system changes or tasks such as hosting being completed after code changes at the end of the split. 
 
+## **New Tasks for Sprint 3**:
 
-## **Changes for Sprint 2**:
+1. Bugfixes for the UI:
+    - We observed a few UI bugs during the previous sprint. Each observed bug is listed as a task and scheduled to be fixed early in the sprint. 
 
-- Initial tasks for stories are now assigned to an individual so that there is less confusion surrounding who should start the task. Later tasks such as tests and connecting frontend with the backend will still be self-assigned. This allows for anyone to start them once the initial tasks are completed. 
+2. Limiting Access to the Firebase API key and Vertex AI:
+    - We will be implementing best practice and securing our API keys to ensure they are secured/cannot be abused in bad faith. 
+    - Security rules for the FIrebase API key will be reviewed.
+    - We will be calling Vertex AI through a REST API to prevent the client from accessing and modifying the prompt. 
 
-- We are combining Sprints 1 and 2, so all Sprint 1 stories and tasks are carried over to sprint 2. Programmers who are still working on Sprint 1 tasks are not assigned to any Sprint 2 tasks. As a result, we do not believe this will negatively impact our ability to complete Sprint 2's tasks. 
-
-- We will continue to assign the same priority to all tasks. 
-
-## **New Tasks for Sprint 2**:
-
-1. Creating Generative AI responses for a Daily Tarot Card reading:
-    - Tarot card readings are much more subjective than we anticipated. 
-    - In order to provide the user with a unique interpretation of the combination of cards they draw, we would like to try to leverage AI to provide a response. 
-    - We will be creating fallback responses to cover for any scenario in which the AI fails (or becomes unusable/unsuitable). These responses will be provided to the user in place of the AI response.
-
-2. Creating a new tab on the website to receive a daily fortune:
-    - We intend to create the frontend for our daily login system this week. 
+3. Daily History Calendar:
+    - We will be adding a weekly calendar to the history tab for users to view the fortunes generated in the calendar week. 
+    - The creation of the frontend and backend are seperated. Conencting the backend and frontend will be required for the the backend task to be closed. 
+    - We will also be implementing limiting the user to one daily fortune per day. 
