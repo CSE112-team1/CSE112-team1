@@ -19,7 +19,11 @@ module.exports = {
     {
       files: ["**/*.spec.*"],
       env: {
-        mocha: true,
+        "mocha": true,
+        "commonjs": true,
+        "es2021": true,
+        "node": true,
+        "jest": true,
       },
       rules: {},
     },

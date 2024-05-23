@@ -9,21 +9,19 @@
  */
 
 
-const {onRequest, onCall} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+const {onCall} = require("firebase-functions/v2/https");
 const {getVertexAI, getGenerativeModel} = require("firebase/vertexai-preview");
+const admin = require("firebase-admin");
+admin.initializeApp();
 
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
-exports.helloWorld = onRequest((request, response) => {
-  logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
-});
 
 /**
  * @param {Request} request Express Request object
  * @param {object} response Express Response object
+ * @returns {Promise<void>} Promise that resolves to either a string or an error
  */
 exports.genFortune = onCall((request, response) => {
   const cards = [
@@ -50,8 +48,12 @@ exports.genFortune = onCall((request, response) => {
     "Judgement",
     "The World",
   ];
-  const body = request.data;
+  const body = request;
+  if (body.card1 === undefined || body.card2 === undefined || body.card3 === undefined) {
+    response.status(400).send("Please provide card numbers");
+  }
 
+  console.log(body);
   const cardnumbers = [body.card1, body.card2, body.card3];
   const cardnames = cardnumbers.map((num) => cards[num]);
   // Check that all cardnames are valid
@@ -69,11 +71,11 @@ exports.genFortune = onCall((request, response) => {
     `${cardnames[0]}},\n` +
     `${cardnames[1]}},\n` +
     `${cardnames[2]}.`;
-  const vertexAI = getVertexAI();
+  const vertexAI = getVertexAI(admin.app());
   const model = getGenerativeModel(vertexAI, {model: "gemini-1.0-pro", systemInstruction: systemprompt});
   const fortune = model.generateContent(userprompt);
   fortune.then((result) => {
-    response.send(result.content);
+    response.send(result.response.text());
   }).catch((error) => {
     response.status(500).send("Error generating fortune");
   });
