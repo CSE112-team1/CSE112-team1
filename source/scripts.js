@@ -279,8 +279,8 @@ const predefinedQuestionResponses = {
 function init() {
   // Add predefined questions to the questions list
   const selectMenu = document.getElementById('question-list');
-  for (var i = 0; i < predefinedQuestions.length; i++) {
-    var question = document.createElement('option');
+  for (let i = 0; i < predefinedQuestions.length; i++) {
+    let question = document.createElement('option');
     question.text = predefinedQuestions[i];
     selectMenu.appendChild(question);
   }
@@ -302,6 +302,9 @@ function init() {
 
   // Setup card flipping functionality
   setupCardFlips();
+
+  // update the sign in button
+  displayLoginButton();
 
   // if screen is resized
   // eslint-disable-next-line no-undef
@@ -365,6 +368,14 @@ function saveHandler() { // eslint-disable-line no-unused-vars
  * and show all elements which we do want displayed
  */
 function displayHomeScreen() {
+  // remove active class from all tabs
+  for (const tab of document.querySelectorAll('.nav-item')) {
+    tab.classList.remove('active');
+  }
+
+  // make daily fortune tab active
+  document.getElementById('nav-btn-home').classList.add('active');
+
   // hide history section
   document.getElementById('history-section').hidden = true;
 
@@ -443,9 +454,18 @@ function displayDailyFortuneScreen() {
   allowCardFlips = false;
   let cardFlips = document.querySelectorAll('.cardflip');
   cardFlips.forEach(function (cardFlip) {
-  cardFlip.classList.toggle('flipped', false);
-});
+    cardFlip.classList.toggle('flipped', false);
+  });
+
+  // remove active class from all tabs
+  for (const tab of document.querySelectorAll('.nav-item')) {
+    tab.classList.remove('active');
+  }
+
+  // make daily fortune tab active
+  document.getElementById('nav-btn-daily-fortune').classList.add('active');
 }
+
 /**
  * History screen display function
  * This function will hide all html elements that we do not want shown on the history screen,
@@ -453,10 +473,18 @@ function displayDailyFortuneScreen() {
  * For this screen, we only want history related items, all others buttons/images should be hidden
  */
 function displayHistoryScreen() { // eslint-disable-line no-unused-vars
+  // remove active class from all tabs
+  for (const tab of document.querySelectorAll('.nav-item')) {
+    tab.classList.remove('active');
+  }
+
+  // make history tab active
+  document.getElementById('nav-btn-history').classList.add('active');
+
   // show history section
   document.getElementById('history-section').hidden = false;
 
-  //hide card images
+  // hide card images
   document.querySelector('.card-container').style.display = 'none';
 
   // hide save button and fortune meaning
@@ -465,6 +493,28 @@ function displayHistoryScreen() { // eslint-disable-line no-unused-vars
 
   // hide generate button and question list
   document.getElementById('fortune-generating').hidden = true;
+
+  // hide daily generate button
+  document.getElementById('daily-fortune-section').hidden = true;
+}
+
+function displayLoginButton() {
+  // the button element
+  const loginBtn = document.getElementById('authlink');
+
+  const app = firebaseApp;
+  const auth = getAuth(app);
+  // check user's sign in status
+  auth.onAuthStateChanged(user => {
+    if(!user) {
+      // user has not logged in
+      loginBtn.innerText = 'Login/Sign Up';
+    } else {
+      // user has logged in
+      loginBtn.innerText = 'Logout';
+    }
+  });
+
 }
 
 /**

@@ -213,3 +213,42 @@ input[type=text]:placeholder {
     width: 300px;
     text-align: center;
 }
+
+/* Adjust the label styling */
+label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: #666; /* Gray color for labels */
+    font-size: 14px; /* Smaller font size for labels */
+    text-align: left;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Container adjustments for form alignment */
+#form-block {
+    padding-top: 60px;
+    padding-bottom: 30px;
+    width: 85%;
+    margin: auto;
+}
+
+/* Styling adjustments for input fields */
+input[type=email], input[type=password] {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+/* Enhance submit button appearance */
+input[type=submit] {
+    margin-top: 20px;
+}
+
+/* Adjust 'Forgot Password?' link positioning */
+#form-footer {
+    margin-top: 20px; /* Space above the forgot password link */
+    font-size: 12px;
+}
