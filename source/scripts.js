@@ -571,6 +571,8 @@ export function displayReading(isFromHistory) {
  */
 function renderHistory() {
   let historyList = [];
+    let weeklyHistory = []; // 0 to 6 (0 indicating Sunday and 6 indicating Saturday)
+
 
   // fetch the stored readings and populate history List
   let readings = getReadings();
@@ -582,6 +584,13 @@ function renderHistory() {
       name: reading.name,
       cardImgs: [`./images/Major Arcana/${reading.cards[0]}.png`, `./images/Major Arcana/${reading.cards[1]}.png`, `./images/Major Arcana/${reading.cards[2]}.png`],
     };
+    // Getting the day of the date and push it to the calendar 
+    var date = new Date(reading.time);
+    var indexDay = date.getDay();
+    historyObj.day = indexDay;
+    weeklyHistory[indexDay] = historyObj;
+
+    // Pushing to general history
     historyList.push(historyObj);
   }
 
@@ -596,6 +605,11 @@ function renderHistory() {
     historyItem.classList.add('history-item');
     historyItem.id = `history-item-${historyObj.id}`;
 
+    let dayObj = historyList[index];
+    let dayItem = document.createElement('div');
+    dayItem.classList.add('day-item');
+    dayItem.id = `day-item-${dayObj.id}`;
+
     // Populate history images
     for (let i = 0; i < historyObj.cardImgs.length; i++) {
       let historyItemImg = document.createElement('img');
@@ -603,6 +617,11 @@ function renderHistory() {
       historyItemImg.src = historyObj.cardImgs[i];
       historyItem.appendChild(historyItemImg);
     }
+
+    let dayItemImg = document.createElement('img');
+      dayItemImg.classList.add('day-item-img');
+      dayItemImg.src = dayObj.cardImgs[i];
+      dayItem.appendChild(dayItemImg);
 
     // Populate history name
     let historyItemName = document.createElement('div');
@@ -659,6 +678,17 @@ function renderHistory() {
 
     // Add item wrapper to the current history display
     history.appendChild(historyItem);
+    // Editing the days in calendar
+    const dayDiv = document.getElementById(`fortune-${dayObj.day}`);
+    console.log(`fortune-${dayObj.day}`);
+    if (dayDiv){
+      if (!dayDiv.hasChildNodes()){
+        dayDiv.appendChild(dayItem);
+      }
+      else{
+        dayDiv.replaceChild(dayItem, dayDiv.firstElementChild);
+      }
+    }
   }
 }
 
