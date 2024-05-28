@@ -1,32 +1,15 @@
-# ***Workplan 4: 05/19/24***
+# **Workplan 5: 05/26/24**
 
-## **Reflections from Sprint 2**:
+## **Reflections from Sprint 3**:
+- We ran into a major blocker while attempting to implement cloud funcitons. This blocker prevented the completion of some tasks since they rely on cloud functions being setup correctly. 
 
-- Most stories from the previous sprint were closed, with the exception of a couple of small tasks. These tasks are planned to be finished during the early portions of the current sprint. 
+- We do not want to assign new tasks while this issue is still pending. To accomodate for the extra time required for this task, we will be altering Sprint 4. 
 
-- Some test related tasks were closed without significant progess. A couple of factors lead to this decision:
-    - Some tasks could not be feasibly tested. 
-    - Testing is currently broken on the CI/CD pipeline. We are holding off on adding new tests until this can be fixed during this sprint. 
-    
-## **Changes for Sprint 3**:
+- Tasks unrelated to our blocker were completed without any issue. 
 
-- While we planned to assign tasks specifically to individuals in the previous sprint, we did not go forward with this decision. Instead we only assigned individuals to to user stories and allowed tasks to be self assigned. This continued to cause some hesitiation to start tasks, so we are now specifically assigning tasks to individuals. 
+## **Changes for Sprint 4**:
+- Sprint 3 will be extended to the end of Wednesday (May 29th). The team will aim to implement cloud functions by then. If we still need more time, we will carry over the task into Sprint 4. 
 
-- Due to the large number of programmers on the team, we are comfortable continuing to assign the same priority to all the tasks. However, we will keep everyone aware on which tasks might benefit from being completed earlier or later in the sprint. Some examples are:
-    - Bugfixes and CI/CD changes being completed earlier in the sprint.
-    - Tasks the might require file system changes or tasks such as hosting being completed after code changes at the end of the split. 
+- Sprint 4 will begin on Thursday (May 30th) and end one week later on Wednesday (June 3rd). Sprint 5 will either be a short sprint after this or will be merged in to Sprint 4, with new tasks being added to Sprint 4 mid sprint. 
 
-## **New Tasks for Sprint 3**:
-
-1. Bugfixes for the UI:
-    - We observed a few UI bugs during the previous sprint. Each observed bug is listed as a task and scheduled to be fixed early in the sprint. 
-
-2. Limiting Access to the Firebase API key and Vertex AI:
-    - We will be implementing best practice and securing our API keys to ensure they are secured/cannot be abused in bad faith. 
-    - Security rules for the FIrebase API key will be reviewed.
-    - We will be calling Vertex AI through a REST API to prevent the client from accessing and modifying the prompt. 
-
-3. Daily History Calendar:
-    - We will be adding a weekly calendar to the history tab for users to view the fortunes generated in the calendar week. 
-    - The creation of the frontend and backend are seperated. Conencting the backend and frontend will be required for the the backend task to be closed. 
-    - We will also be implementing limiting the user to one daily fortune per day. 
+- A new workplan will be created after the end of Sprint 3 to create new tasks. 
