@@ -17,7 +17,7 @@ describe("Cloud Functions", () => {
       const wrapped = test.wrap(myFunctions.genFortune);
       const data = {cardIndex1: 3, cardIndex2: 4, cardIndex3: 5};
       try {
-        const fortune = await wrapped(data);
+        const fortune = await wrapped({data: data});
         console.log(fortune);
         // successful test
       } catch (err) {
@@ -36,6 +36,7 @@ describe("Cloud Functions", () => {
       } catch (err) {
         console.error(err);
         // successful test
+        return "success";
       }
     });
   });
