@@ -9,7 +9,7 @@ let currentReading = {};
 let allowCardFlips = false;
 
 // The drawable tarot cards (only the Major Arcana for now)
-const cards = [
+export const cards = [
   'The Fool', 'The Magician', 'The High Priestess',
   'The Empress', 'The Emperor', 'The Hierophant',
   'The Lovers', 'The Chariot', 'Strength',
