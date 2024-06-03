@@ -32,7 +32,7 @@ async function generateDailyFortune(card1, card2, card3) {
 
     //Call the cloud function to generate the fortune
     const functions = getFunctions();
-    connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+    //connectFunctionsEmulator(functions, '127.0.0.1', 5001);
     const genFortune = httpsCallable(functions, 'genFortune');
     return genFortune({ cardIndex1: cardindex1, cardIndex2: cardindex2, cardIndex3: cardindex3 }).then(
         async (result) => {
