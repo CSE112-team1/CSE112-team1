@@ -15,9 +15,28 @@ describe("Cloud Functions", () => {
   describe("genFortune", () => {
     it("should return a fortune", async () => {
       const wrapped = test.wrap(myFunctions.genFortune);
-      const data = {card1: 1, card2: 2, card3: 3};
-      const fortune = await wrapped(data);
-      console.log(fortune);
+      const data = {cardIndex1: 3, cardIndex2: 4, cardIndex3: 5};
+      try {
+        const fortune = await wrapped(data);
+        console.log(fortune);
+        // successful test
+      } catch (err) {
+        console.error(err);
+        // failed test
+        throw err;
+      }
+    });
+    it("should return an error if no card numbers are provided", async () => {
+      const wrapped = test.wrap(myFunctions.genFortune);
+      try {
+        const fortune = await wrapped({data: {}});
+        console.log(fortune);
+        // failed test
+        throw new Error("Function did not throw an error");
+      } catch (err) {
+        console.error(err);
+        // successful test
+      }
     });
   });
 });

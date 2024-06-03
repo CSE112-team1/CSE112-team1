@@ -8,11 +8,11 @@
  */
 
 
-const {onCall} = require("firebase-functions/v2/https");
+const {onCall, HttpsError} = require("firebase-functions/v2/https");
 const {getVertexAI, getGenerativeModel} = require("firebase/vertexai-preview");
-const {initializeApp:adminInitApp} = require("firebase-admin/app");
+const {initializeApp: adminInitApp} = require("firebase-admin/app");
 const {getApps, getApp, initializeApp: clientInitApp} = require("firebase/app");
-adminapp = adminInitApp();
+const adminapp = adminInitApp();
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAg-V91iKbuab9_xlFqMLFVIDmLmJ_5WrE', //eslint-disable-line
@@ -61,10 +61,9 @@ exports.genFortune = onCall( async (request, response) => {
     "The World",
   ];
   const body = request.data;
-  console.log(body.cardIndex1);
   // eslint-disable-next-line max-len
-  if (body.cardIndex1 === undefined || body.cardIndex2 === undefined || body.cardIndex3 === undefined) {
-    response.status(400).send("Please provide card numbers");
+  if (!body || !body.cardIndex1 || !body.cardIndex2 || !body.cardIndex3) {
+    throw new HttpsError("invalid-argument", "Please provide card numbers");
   }
 
   console.log(body);
@@ -72,7 +71,7 @@ exports.genFortune = onCall( async (request, response) => {
   const cardnames = cardnumbers.map((num) => cards[num]);
   // Check that all cardnames are valid
   if (cardnames.includes(undefined)) {
-    response.status(400).send("Please provide valid card numbers");
+    throw new HttpsError("invalid-argument", "Invalid card number");
   }
 
   const systemprompt =
@@ -92,9 +91,8 @@ exports.genFortune = onCall( async (request, response) => {
   // eslint-disable-next-line max-len
   const model = getGenerativeModel(vertexAI, {model: "gemini-1.0-pro", systemInstruction: systemprompt});
   return await model.generateContent(userprompt).then((result) => {
-    console.log(result.response.text());
     return result.response.text();
   }).catch((error) => {
-    response.status(500).send("Error generating fortune");
+    throw new HttpsError("internal", "Error generating fortune from model");
   });
 });
