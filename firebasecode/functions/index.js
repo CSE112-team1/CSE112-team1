@@ -10,9 +10,9 @@
 
 const {onCall} = require("firebase-functions/v2/https");
 const {getVertexAI, getGenerativeModel} = require("firebase/vertexai-preview");
-const {admin} = require("firebase-admin");
-admin.initializeApp();
+const {initializeApp:adminInitApp} = require("firebase-admin/app");
 const {getApps, getApp, initializeApp: clientInitApp} = require("firebase/app");
+adminapp = adminInitApp();
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAg-V91iKbuab9_xlFqMLFVIDmLmJ_5WrE', //eslint-disable-line
