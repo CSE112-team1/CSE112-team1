@@ -22,5 +22,6 @@ export const model = getGenerativeModel(vertexAI, {model:'gemini-1.0-pro'});
 const functions = getFunctions();
 connectFunctionsEmulator(functions, '127.0.0.1', 5001);
 export const genFortune = httpsCallable(functions, 'genFortune');
+export const signUpData = httpsCallable(functions, 'signUpData');
 
 export default firebaseApp;

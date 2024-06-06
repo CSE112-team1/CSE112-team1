@@ -8,10 +8,11 @@
  */
 
 
-const {onCall, HttpsError} = require("firebase-functions/v2/https");
+ const {onCall, HttpsError} = require("firebase-functions/v2/https");
 const {getVertexAI, getGenerativeModel} = require("firebase/vertexai-preview");
 const {initializeApp: adminInitApp} = require("firebase-admin/app");
 const {getApps, getApp, initializeApp: clientInitApp} = require("firebase/app");
+const {getFirestore, doc, setDoc} = require("firebase-admin/firestore");
 const adminapp = adminInitApp();
 
 const firebaseConfig = {
@@ -96,3 +97,14 @@ exports.genFortune = onCall( async (request, response) => {
     throw new HttpsError("internal", "Error generating fortune from model");
   });
 });
+
+exports.signUpData = onCall( async (request) => {
+  const db = getFirestore(adminapp);
+  // eslint-disable-next-line new-cap
+  return await db.collection("users").doc(request.auth.uid).set({
+    dailyLimitStatus: false,
+    dailyHistoryArray: [],
+  });
+});
+
+
