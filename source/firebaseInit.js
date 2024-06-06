@@ -23,5 +23,6 @@ const functions = getFunctions();
 connectFunctionsEmulator(functions, '127.0.0.1', 5001);
 export const genFortune = httpsCallable(functions, 'genFortune');
 export const signUpData = httpsCallable(functions, 'signUpData');
+export const updateDailyStatus = httpsCallable(functions, 'updateDailyStatus');
 
 export default firebaseApp;

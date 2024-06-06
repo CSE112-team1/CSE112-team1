@@ -107,4 +107,10 @@ exports.signUpData = onCall( async (request) => {
   });
 });
 
+exports.updateDailyStatus = onCall( async (request) => {
+  const db = getFirestore(adminapp);
+  const userRef = db.collection("users").doc(request.auth.uid);
+  return await userRef.update({dailyLimitStatus: true});
+});
+
 
