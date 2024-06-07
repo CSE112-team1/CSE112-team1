@@ -3,7 +3,6 @@ import {drawCards, generateAIHandler} from './scripts.js';
 import {model, updateDailyStatus} from './firebaseInit.js';
 // eslint-disable-next-line no-unused-vars
 
-import {getFunctions, httpsCallable, connectFunctionsEmulator} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js';
 import {cards} from './scripts.js';
 import {genFortune} from './firebaseInit.js';
 
