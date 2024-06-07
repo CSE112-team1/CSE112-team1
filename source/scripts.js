@@ -415,6 +415,7 @@ function displayHomeScreen() {
  * and show all elements which we do want displayed
  */
 function displayDailyFortuneScreen() {
+  document.getElementById('daily-generate-btn').hidden = true;
   const app = firebaseApp;
   const auth = getAuth(app);
   auth.onAuthStateChanged(user => {

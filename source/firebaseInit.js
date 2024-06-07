@@ -1,5 +1,6 @@
 import { getApps, getApp, initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import {getVertexAI, getGenerativeModel } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-vertexai-preview.js';
+// eslint-disable-next-line no-unused-vars
 import {getFunctions, httpsCallable, connectFunctionsEmulator} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js';
 // Firebase config info
 const firebaseConfig = {
