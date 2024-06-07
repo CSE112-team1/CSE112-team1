@@ -1,9 +1,11 @@
 
 import {drawCards, generateAIHandler} from './scripts.js';
-import {model} from './firebaseInit.js';
+import {model, updateDailyStatus} from './firebaseInit.js';
 // eslint-disable-next-line no-unused-vars
+
 import {getFunctions, httpsCallable, connectFunctionsEmulator} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js';
-import {cards as cardDeck} from './scripts.js';
+import {cards} from './scripts.js';
+import {genFortune} from './firebaseInit.js';
 
 
 const aiModel = model;
@@ -35,10 +37,10 @@ function stopShuffle() {
 async function generateDailyFortune(card1, card2, card3) {
     const prompt = `Create a fortune for the day based on these three tarot cards: ${card1}, ${card2}, ${card3}. Answer in 50 to 60 words.`;
     //Serialize the three cards based on their index in the cards array
-    const cardindex1 = cardDeck.indexOf(card1);
+    const cardindex1 = cards.indexOf(card1);
     console.log(cardindex1);
-    const cardindex2 = cardDeck.indexOf(card2);
-    const cardindex3 = cardDeck.indexOf(card3);
+    const cardindex2 = cards.indexOf(card2);
+    const cardindex3 = cards.indexOf(card3);
 
     //Check if the cards are valid
     if (cardindex1 === -1 || cardindex2 === -1 || cardindex3 === -1) {
@@ -47,9 +49,6 @@ async function generateDailyFortune(card1, card2, card3) {
     }
 
     //Call the cloud function to generate the fortune
-    const functions = getFunctions();
-    //connectFunctionsEmulator(functions, '127.0.0.1', 5001);
-    const genFortune = httpsCallable(functions, 'genFortune');
     return genFortune({ cardIndex1: cardindex1, cardIndex2: cardindex2, cardIndex3: cardindex3 }).then(
         async (result) => {
             const text = await result.data;
@@ -79,6 +78,11 @@ genButton.addEventListener('click', function(event)  {
     let drawnCards = drawCards();
     generateDailyFortune(drawnCards[0], drawnCards[1], drawnCards[2])
         .then((text) => {
+            updateDailyStatus().then(async() => {
+                console.log('Successful DB update');
+            }).catch(async(error) => {
+                console.log('db update failed', error.message);
+            });
             generateAIHandler(text,drawnCards);
         })
         .catch((error) => {

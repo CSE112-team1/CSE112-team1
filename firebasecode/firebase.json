@@ -23,5 +23,24 @@
       "**/node_modules/**",
       "**/source/__tests__"
     ]
+  },
+  "emulators": {
+    "functions": {
+      "port": 5001
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000
+    },
+    "singleProjectMode": true,
+    "pubsub": {
+      "port": 8085
+    }
   }
 }

@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import firebaseApp from './firebaseInit.js';
+import firebaseApp, {signUpData} from './firebaseInit.js';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const app = firebaseApp;
@@ -20,8 +20,15 @@ register.addEventListener('click', function (event) {
       // const user = userCredential.user;
       console.log('User created:', userCredential.user);
       alert('Created Account!');
-      // ...
-      window.location.href = 'index.html'; //eslint-disable-line
+      signUpData().then(
+          async() => {
+              console.log('Successful db write');
+              window.location.href = 'index.html'; //eslint-disable-line
+          }
+      ).catch( async(error) => {
+          console.log('db write failed', error.message);
+          window.location.href = 'index.html'; //eslint-disable-line
+      });
     })
     .catch((error) => {
       const errorMessage = error.message;
