@@ -687,3 +687,35 @@ textarea {
     font-size: 1.2rcap;
   }
 }
+
+/* card shuffle */
+.hide {
+  display: none;
+}
+
+
+@keyframes moveRight {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes moveLeft {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-100%);
+  }
+}
+
+.card-1 {
+  animation: moveRight 2s infinite;
+}
+
+.card-3 {
+  animation: moveLeft 2s infinite;
+}
