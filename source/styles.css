@@ -713,9 +713,9 @@ textarea {
 }
 
 .card-1 {
-  animation: moveRight 2s infinite;
+  animation: moveRight 2s;
 }
 
 .card-3 {
-  animation: moveLeft 2s infinite;
+  animation: moveLeft 2s;
 }
