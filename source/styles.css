@@ -723,3 +723,36 @@ textarea {
     padding: 2rem 1rem;
   }
 }
+
+.card {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px; /* Increased padding for a larger card */
+  border-radius: 25px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Increased box shadow */
+  z-index: 1000;
+}
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+#card-title {
+  text-align: center;
+}
+.center-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}

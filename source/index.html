@@ -132,7 +132,14 @@
             <div class="container-col" id="history"></div>
         </div>
     </section>
-
+    <div class="overlay" id="overlay"></div>
+    <div class="card" id="card">
+        <h3 id="card-title"></h3>
+        <h4 id="fortune-text"></h4>
+        <div class="center-button">
+            <button onclick="closeCard()" id="close-btn-card">Close</button>
+        </div>
+    </div>
     <!-- Renaming Popup for History -->
     <section>
         <div id="popup" class="popup-container">
@@ -159,5 +166,10 @@
     <script type="module" src="vertexAI.js"></script>
 
 </body>
-
+<script>
+    function closeCard() {
+        document.getElementById('card').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    }
+</script>
 </html>

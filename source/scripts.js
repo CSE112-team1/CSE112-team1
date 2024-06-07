@@ -990,3 +990,20 @@ try {
 } catch {
   // do nothing, running in browser
 }
+
+
+//
+document.addEventListener('DOMContentLoaded', function () {
+  const days = document.querySelectorAll('.calendar div');
+  days.forEach((day, index) => {
+      day.addEventListener('click', () => {
+        //Get the fortune text from the backend and insert it here maybe?
+        const fortuneText = `Your fortune for ${day.querySelector('h3').innerText} is this right here blah blah!`;
+        document.getElementById('fortune-text').innerText = fortuneText;
+          document.getElementById('card').style.display = 'block';
+          document.getElementById('overlay').style.display = 'block';
+          document.getElementById('card-title').innerText = day.querySelector('h3').innerText;
+      });
+  });
+});
+
