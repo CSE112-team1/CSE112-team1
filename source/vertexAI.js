@@ -2,6 +2,7 @@
 import {drawCards, generateAIHandler} from './scripts.js';
 import {model, updateDailyStatus} from './firebaseInit.js';
 // eslint-disable-next-line no-unused-vars
+
 import {cards} from './scripts.js';
 import {genFortune} from './firebaseInit.js';
 
@@ -9,6 +10,21 @@ import {genFortune} from './firebaseInit.js';
 const aiModel = model;
 
 const genButton = document.getElementById('daily-generate-btn');
+const cardElements = document.querySelectorAll('.cardflip');
+const loadingAnimation = document.getElementById('loading-animation');
+
+function shuffleCards() {
+    cardElements.forEach((card, index) => {
+        card.classList.remove('card-1', 'card-2', 'card-3');
+        card.classList.add(`card-${index + 1}`);
+    });
+}
+
+function stopShuffle() {
+    cardElements.forEach(card => {
+        card.classList.remove('card-1', 'card-2', 'card-3');
+    });
+}
 
 /**
  * Provides and AI-generated fortune for the day based on three randomly selected tarot cards.
@@ -55,6 +71,8 @@ async function generateDailyFortune(card1, card2, card3) {
  */
 genButton.addEventListener('click', function(event)  {
     event.preventDefault();
+    loadingAnimation.classList.remove('hide'); // Show loading animation
+    shuffleCards(); // Start the shuffle animation
 
     let drawnCards = drawCards();
     generateDailyFortune(drawnCards[0], drawnCards[1], drawnCards[2])
@@ -69,6 +87,10 @@ genButton.addEventListener('click', function(event)  {
         .catch((error) => {
             console.log(error.code, error.message);
             console.log('Failure');
+        })
+        .finally(() => {
+            loadingAnimation.classList.add('hide'); // Hide loading animation after completion or failure
+            stopShuffle();
         });
 });
 
