@@ -1,9 +1,9 @@
 
 import {drawCards, generateAIHandler} from './scripts.js';
-import {model} from './firebaseInit.js';
+import {model, updateDailyStatus} from './firebaseInit.js';
 // eslint-disable-next-line no-unused-vars
-import {getFunctions, httpsCallable, connectFunctionsEmulator} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js';
 import {cards} from './scripts.js';
+import {genFortune} from './firebaseInit.js';
 
 
 const aiModel = model;
@@ -32,9 +32,6 @@ async function generateDailyFortune(card1, card2, card3) {
     }
 
     //Call the cloud function to generate the fortune
-    const functions = getFunctions();
-    //connectFunctionsEmulator(functions, '127.0.0.1', 5001);
-    const genFortune = httpsCallable(functions, 'genFortune');
     return genFortune({ cardIndex1: cardindex1, cardIndex2: cardindex2, cardIndex3: cardindex3 }).then(
         async (result) => {
             const text = await result.data;
@@ -62,6 +59,11 @@ genButton.addEventListener('click', function(event)  {
     let drawnCards = drawCards();
     generateDailyFortune(drawnCards[0], drawnCards[1], drawnCards[2])
         .then((text) => {
+            updateDailyStatus().then(async() => {
+                console.log('Successful DB update');
+            }).catch(async(error) => {
+                console.log('db update failed', error.message);
+            });
             generateAIHandler(text,drawnCards);
         })
         .catch((error) => {

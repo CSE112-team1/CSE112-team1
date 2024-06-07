@@ -1,5 +1,7 @@
 import { getApps, getApp, initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import {getVertexAI, getGenerativeModel } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-vertexai-preview.js';
+// eslint-disable-next-line no-unused-vars
+import {getFunctions, httpsCallable, connectFunctionsEmulator} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js';
 // Firebase config info
 const firebaseConfig = {
     apiKey: 'AIzaSyAg-V91iKbuab9_xlFqMLFVIDmLmJ_5WrE', //eslint-disable-line
@@ -17,5 +19,12 @@ const firebaseApp = !getApps().length ? initializeApp(firebaseConfig): getApp();
 // Initialize AI model
 const vertexAI = getVertexAI(firebaseApp);
 export const model = getGenerativeModel(vertexAI, {model:'gemini-1.0-pro'});
+
+const functions = getFunctions();
+//connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+export const genFortune = httpsCallable(functions, 'genFortune');
+export const signUpData = httpsCallable(functions, 'signUpData');
+export const updateDailyStatus = httpsCallable(functions, 'updateDailyStatus');
+export const checkDailyStatus = httpsCallable(functions, 'checkDailyStatus');
 
 export default firebaseApp;

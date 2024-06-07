@@ -1,12 +1,14 @@
 
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import firebaseApp from './firebaseInit.js';
+import firebaseApp, {checkDailyStatus} from './firebaseInit.js';
 
 // The current reading object displayed on the page
 let currentReading = {};
 
 // Global to determine when to allow card flips
 let allowCardFlips = false;
+// Global to determine if daily fortune has been generated
+let statusCheck = false;
 
 // The drawable tarot cards (only the Major Arcana for now)
 export const cards = [
@@ -344,7 +346,7 @@ export function generateAIHandler(text, drawnCards) {
   const reading = text;
   currentReading = generateAiReading(reading, drawnCards);
   const isFromHistory = false;
-  displayReading(isFromHistory);
+  displayAIReading(isFromHistory);
   allowCardFlips = true;
 }
 
@@ -411,8 +413,11 @@ function displayHomeScreen() {
  * Daily fortune display function
  * This function will hide all html elements that we do not want shown on the daily fortune screen,
  * and show all elements which we do want displayed
+ * If the user is not logged in, forces log in attempt
+ * If the user has generated a daily fortune, hides the generate button
  */
 function displayDailyFortuneScreen() {
+  document.getElementById('daily-generate-btn').hidden = true;
   const app = firebaseApp;
   const auth = getAuth(app);
   auth.onAuthStateChanged(user => {
@@ -420,6 +425,27 @@ function displayDailyFortuneScreen() {
       window.location.href = 'login.html'; //eslint-disable-line
     } else {
       console.log(user);
+      checkDailyStatus().then( async (status) => {
+        console.log('status check successful');
+        if( status.data === false ) {
+          statusCheck = false;
+          console.log(statusCheck);
+          console.log('Show Button');
+          document.getElementById('daily-generate-btn').hidden = false;
+          document.getElementById('meaning-section').hidden = true;
+        } else {
+          statusCheck = true;
+          console.log(statusCheck);
+          document.getElementById('daily-generate-btn').hidden = true;
+          document.getElementById('meaning-section').hidden = false;
+          let meaning = document.getElementById('meaning');
+          const genMessage = 'Thank you for generating your fortune! Come back tomorrow for a new fortune. \n Check out this week\'s fortune in the History tab';
+          meaning.innerHTML = `<p> ${genMessage} </p>`;
+          meaning.style.display = 'block';
+        }
+      }).catch( async (error) => {
+        console.log('status check failed', error.message);
+      });
     }
   });
   /*if (!auth.currentUser) {
@@ -430,6 +456,8 @@ function displayDailyFortuneScreen() {
 
   // If logged in, hide the popup if it was previously shown
   //document.getElementById('login-popup').style.display = 'none';
+
+
   // hide history section
   document.getElementById('history-section').hidden = true;
   // change card images back to their defaults
@@ -439,7 +467,6 @@ function displayDailyFortuneScreen() {
 
 
   // hide save button and fortune meaning
-  document.getElementById('meaning-section').hidden = true;
   document.getElementById('save').hidden = true;
 
   // show card images
@@ -464,6 +491,7 @@ function displayDailyFortuneScreen() {
 
   // make daily fortune tab active
   document.getElementById('nav-btn-daily-fortune').classList.add('active');
+
 }
 
 /**
@@ -483,12 +511,11 @@ function displayHistoryScreen() { // eslint-disable-line no-unused-vars
 
   // show history section
   document.getElementById('history-section').hidden = false;
-
+  document.getElementById('meaning-section').hidden = true;
   // hide card images
   document.querySelector('.card-container').style.display = 'none';
 
   // hide save button and fortune meaning
-  document.getElementById('meaning-section').hidden = true;
   document.getElementById('save').hidden = true;
 
   // hide generate button and question list
@@ -531,6 +558,7 @@ export function displayReading(isFromHistory) {
   document.getElementById('save').hidden = false;
   document.getElementById('meaning-section').hidden = false;
   document.getElementById('history-section').hidden = false;
+  document.getElementById('daily-generate-btn').hidden = true;
   if (isFromHistory) {
     // hide question list and generate button
     document.getElementById('fortune-generating').hidden = true;
@@ -538,6 +566,51 @@ export function displayReading(isFromHistory) {
     document.getElementById('save').hidden = true;
   }
   
+  const firstCardMeaning = document.querySelector('.cardmeaning');
+  const secondCardMeaing = document.querySelectorAll('.cardmeaning')[1];
+  const thirdCardMeaning = document.querySelectorAll('.cardmeaning')[2];
+  const firstCardTitle = document.querySelector('.card-title');
+  const secondCardTitle = document.querySelectorAll('.card-title')[1];
+  const thirdCardTitle = document.querySelectorAll('.card-title')[2];
+
+  firstCardMeaning.textContent = currentReading.pastMeaning;
+  secondCardMeaing.textContent = currentReading.presentMeaning;
+  thirdCardMeaning.textContent = currentReading.futureMeaning;
+  firstCardTitle.textContent = currentReading.cards[0];
+  secondCardTitle.textContent = currentReading.cards[1];
+  thirdCardTitle.textContent = currentReading.cards[2];
+
+  imageLeft.src = './images/Major Arcana/' + currentReading.cards[0] + '.png';
+  imageMid.src = './images/Major Arcana/' + currentReading.cards[1] + '.png';
+  imageRight.src = './images/Major Arcana/' + currentReading.cards[2] + '.png';
+
+  let meaning = document.getElementById('meaning');
+  meaning.innerHTML = `
+    <h3>${currentReading.userInput}</h3>
+    <p>${currentReading.fortune}</p>
+  `;
+  meaning.style.display = 'block';
+
+  allowCardFlips = true;
+}
+
+export function displayAIReading(isFromHistory) {
+  let imageLeft = document.getElementById('display-img-left');
+  let imageMid = document.getElementById('display-img-mid');
+  let imageRight = document.getElementById('display-img-right');
+
+  document.querySelector('.card-container').style.display = 'flex';
+  document.getElementById('save').hidden = true;
+  document.getElementById('meaning-section').hidden = false;
+  document.getElementById('history-section').hidden = true;
+  document.getElementById('daily-generate-btn').hidden = true;
+  if (isFromHistory) {
+    // hide question list and generate button
+    document.getElementById('fortune-generating').hidden = true;
+    // hide save button
+    document.getElementById('save').hidden = true;
+  }
+
   const firstCardMeaning = document.querySelector('.cardmeaning');
   const secondCardMeaing = document.querySelectorAll('.cardmeaning')[1];
   const thirdCardMeaning = document.querySelectorAll('.cardmeaning')[2];

@@ -12,6 +12,9 @@ const {onCall, HttpsError} = require("firebase-functions/v2/https");
 const {getVertexAI, getGenerativeModel} = require("firebase/vertexai-preview");
 const {initializeApp: adminInitApp} = require("firebase-admin/app");
 const {getApps, getApp, initializeApp: clientInitApp} = require("firebase/app");
+const {getFirestore} = require("firebase-admin/firestore");
+const {onSchedule} = require("firebase-functions/v2/scheduler");
+
 const adminapp = adminInitApp();
 
 const firebaseConfig = {
@@ -96,3 +99,44 @@ exports.genFortune = onCall( async (request, response) => {
     throw new HttpsError("internal", "Error generating fortune from model");
   });
 });
+
+exports.signUpData = onCall( async (request) => {
+  const db = getFirestore(adminapp);
+  // eslint-disable-next-line new-cap
+  return await db.collection("users").doc(request.auth.uid).set({
+    dailyLimitStatus: false,
+    dailyHistoryArray: ["", "", "", "", "", "", ""],
+  });
+});
+
+exports.updateDailyStatus = onCall( async (request) => {
+  const db = getFirestore(adminapp);
+  const userRef = db.collection("users").doc(request.auth.uid);
+  return await userRef.update({dailyLimitStatus: true});
+});
+
+exports.checkDailyStatus = onCall( async (request) => {
+  const db = getFirestore(adminapp);
+  // eslint-disable-next-line max-len
+  const userRef = db.collection("users").doc(request.auth.uid);
+  const docSnapshot = await userRef.get();
+  console.log(docSnapshot.data().dailyLimitStatus);
+  return docSnapshot.data().dailyLimitStatus;
+});
+
+exports.dailyReset = onSchedule("every day 00:00", async (event) => {
+  const db = getFirestore(adminapp);
+  return db.collection("users").get()
+      .then((snapshot) => {
+        snapshot.forEach(async (doc) => {
+          const userRef = db.collection("users").doc(doc.id);
+          const res = await userRef.update({dailyLimitStatus: false});
+          console.log(res);
+        });
+      })
+      .catch((error)=> {
+        console.log("Error resetting daily reset", error.message);
+      });
+});
+
+
