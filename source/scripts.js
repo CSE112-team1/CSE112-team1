@@ -413,6 +413,8 @@ function displayHomeScreen() {
  * Daily fortune display function
  * This function will hide all html elements that we do not want shown on the daily fortune screen,
  * and show all elements which we do want displayed
+ * If the user is not logged in, forces log in attempt
+ * If the user has generated a daily fortune, hides the generate button
  */
 function displayDailyFortuneScreen() {
   document.getElementById('daily-generate-btn').hidden = true;
