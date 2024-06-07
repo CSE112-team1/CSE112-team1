@@ -24,5 +24,15 @@
   "dependencies": {
     "firebase": "^10.12.2"
   },
-  "type": "module"
+  "type": "module",
+  "exports": {
+    "./jest.config.unit.js": {
+      "require": "./jest.config.unit.cjs",
+      "import": "./jest.config.unit.js"
+    },
+    "./jest.config.integration.js": {
+      "require": "./jest.config.integration.cjs",
+      "import": "./jest.config.integration.js"
+    }
+  }
 }
