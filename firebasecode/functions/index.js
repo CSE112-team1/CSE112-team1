@@ -113,4 +113,13 @@ exports.updateDailyStatus = onCall( async (request) => {
   return await userRef.update({dailyLimitStatus: true});
 });
 
+exports.checkDailyStatus = onCall( async (request) => {
+  const db = getFirestore(adminapp);
+  // eslint-disable-next-line max-len
+  const userRef = db.collection("users").doc(request.auth.uid);
+  const docSnapshot = await userRef.get();
+  console.log(docSnapshot.data().dailyLimitStatus);
+  return docSnapshot.data().dailyLimitStatus;
+});
+
 

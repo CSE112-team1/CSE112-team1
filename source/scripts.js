@@ -1,12 +1,14 @@
 
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import firebaseApp from './firebaseInit.js';
+import firebaseApp, {checkDailyStatus} from './firebaseInit.js';
 
 // The current reading object displayed on the page
 let currentReading = {};
 
 // Global to determine when to allow card flips
 let allowCardFlips = false;
+// Global to determine if daily fortune has been generated
+let statusCheck = false;
 
 // The drawable tarot cards (only the Major Arcana for now)
 export const cards = [
@@ -420,6 +422,21 @@ function displayDailyFortuneScreen() {
       window.location.href = 'login.html'; //eslint-disable-line
     } else {
       console.log(user);
+      checkDailyStatus().then( async (status) => {
+        console.log('status check successful');
+        if( status.data === false ) {
+          statusCheck = false;
+          console.log(statusCheck);
+          console.log('Show Button');
+          document.getElementById('daily-generate-btn').hidden = false;
+        } else {
+          statusCheck = true;
+          console.log(statusCheck);
+          document.getElementById('daily-generate-btn').hidden = true;
+        }
+      }).catch( async (error) => {
+        console.log('status check failed', error.message);
+      });
     }
   });
   /*if (!auth.currentUser) {
@@ -430,6 +447,8 @@ function displayDailyFortuneScreen() {
 
   // If logged in, hide the popup if it was previously shown
   //document.getElementById('login-popup').style.display = 'none';
+
+
   // hide history section
   document.getElementById('history-section').hidden = true;
   // change card images back to their defaults
@@ -464,6 +483,7 @@ function displayDailyFortuneScreen() {
 
   // make daily fortune tab active
   document.getElementById('nav-btn-daily-fortune').classList.add('active');
+
 }
 
 /**
@@ -531,6 +551,7 @@ export function displayReading(isFromHistory) {
   document.getElementById('save').hidden = false;
   document.getElementById('meaning-section').hidden = false;
   document.getElementById('history-section').hidden = false;
+  document.getElementById('daily-generate-btn').hidden = true;
   if (isFromHistory) {
     // hide question list and generate button
     document.getElementById('fortune-generating').hidden = true;
