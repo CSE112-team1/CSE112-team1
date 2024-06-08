@@ -25,6 +25,7 @@ const functions = getFunctions();
 export const genFortune = httpsCallable(functions, 'genFortune');
 export const signUpData = httpsCallable(functions, 'signUpData');
 export const updateDailyStatus = httpsCallable(functions, 'updateDailyStatus');
+export const updateHistoryArray = httpsCallable(functions, 'updateHistoryArray');
 export const checkDailyStatus = httpsCallable(functions, 'checkDailyStatus');
 
 export default firebaseApp;

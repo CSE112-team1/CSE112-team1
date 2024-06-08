@@ -14,6 +14,8 @@ const {initializeApp: adminInitApp} = require("firebase-admin/app");
 const {getApps, getApp, initializeApp: clientInitApp} = require("firebase/app");
 const {getFirestore} = require("firebase-admin/firestore");
 const {onSchedule} = require("firebase-functions/v2/scheduler");
+const {Timestamp} = require("firebase-admin/firestore");
+
 
 const adminapp = adminInitApp();
 
@@ -114,6 +116,42 @@ exports.updateDailyStatus = onCall( async (request) => {
   const userRef = db.collection("users").doc(request.auth.uid);
   return await userRef.update({dailyLimitStatus: true});
 });
+
+exports.updateHistoryArray = onCall( async (request) => {
+  const db = getFirestore(adminapp);
+  const userRef = db.collection("users").doc(request.auth.uid);
+  const constDate = Timestamp.fromDate(new Date());
+  const constDay = constDate.getDay();
+  console.log("Day: " + constDay);
+  let refArray = await userRef.get().data().dailyHistoryArray;
+  switch(constDay){
+    case 0:
+      refArray[0] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      break
+    case 1:
+      refArray[1] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      break
+    case 2:
+      refArray[2] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      break
+    case 3:
+      refArray[3] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      break
+    case 4:
+      refArray[4] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      break
+    case 5:
+      refArray[5] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      console.log(refArray[5]);
+      break
+    case 6:
+      refArray[6] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      break
+  }
+  return await userRef.update({dailyHistoryArray: refArray});
+});
+
+
 
 exports.checkDailyStatus = onCall( async (request) => {
   const db = getFirestore(adminapp);
