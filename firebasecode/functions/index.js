@@ -120,38 +120,54 @@ exports.updateDailyStatus = onCall( async (request) => {
 exports.updateHistoryArray = onCall( async (request) => {
   const db = getFirestore(adminapp);
   const userRef = db.collection("users").doc(request.auth.uid);
-  const constDate = Timestamp.fromDate(new Date());
+  const constTimestamp = Timestamp.fromDate(new Date());
+  console.log(constTimestamp);
+  const constDate = new Date(constTimestamp.seconds*1000 - (7*60*60*1000));
+  console.log("Date: " + constDate);
   const constDay = constDate.getDay();
   console.log("Day: " + constDay);
-  let refArray = await userRef.get().data().dailyHistoryArray;
-  switch(constDay){
+  const docSnapshot = await userRef.get();
+  const refArray = docSnapshot.data().dailyHistoryArray;
+  switch (constDay) {
     case 0:
+      // eslint-disable-next-line max-len
       refArray[0] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
-      break
+      break;
     case 1:
+      // eslint-disable-next-line max-len
       refArray[1] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
-      break
+      break;
     case 2:
+      // eslint-disable-next-line max-len
       refArray[2] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
-      break
+      break;
     case 3:
+      // eslint-disable-next-line max-len
       refArray[3] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
-      break
+      break;
     case 4:
+      // eslint-disable-next-line max-len
       refArray[4] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
-      break
+      break;
     case 5:
+      // eslint-disable-next-line max-len
       refArray[5] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
       console.log(refArray[5]);
-      break
+      break;
     case 6:
+      // eslint-disable-next-line max-len
       refArray[6] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
-      break
+      break;
   }
   return await userRef.update({dailyHistoryArray: refArray});
 });
 
-
+exports.pullHistory = onCall( async (request) => {
+  const db = getFirestore(adminapp);
+  const userRef = db.collection("users").doc(request.auth.uid);
+  const docSnapshot = await userRef.get();
+  return docSnapshot.data().dailyHistoryArray;
+});
 
 exports.checkDailyStatus = onCall( async (request) => {
   const db = getFirestore(adminapp);
