@@ -360,7 +360,6 @@ export function generateAIHandler(text, drawnCards) {
   const isFromHistory = false;
   displayAIReading(isFromHistory);
   allowCardFlips = true;
-  renderCalendar();
 }
 
 /**
@@ -514,6 +513,17 @@ function displayDailyFortuneScreen() {
  * For this screen, we only want history related items, all others buttons/images should be hidden
  */
 function displayHistoryScreen() { // eslint-disable-line no-unused-vars
+  const app = firebaseApp;
+  const auth = getAuth(app);
+  auth.onAuthStateChanged(user => {
+    if(!user) {
+      console.log('No calendar');
+    } else {
+      // Setup calendar
+      renderCalendar();
+    }
+  });
+
   // remove active class from all tabs
   for (const tab of document.querySelectorAll('.nav-item')) {
     tab.classList.remove('active');
@@ -572,7 +582,7 @@ export function displayReading(isFromHistory) {
   document.querySelector('.card-container').style.display = 'flex';
   document.getElementById('save').hidden = false;
   document.getElementById('meaning-section').hidden = false;
-  document.getElementById('history-section').hidden = false;
+  document.getElementById('history-section').hidden = true;
   document.getElementById('daily-generate-btn').hidden = true;
   if (isFromHistory) {
     // hide question list and generate button
@@ -673,26 +683,51 @@ function renderCalendar() {
           card2: cards[1],
           card3: cards[2],
           text: parts[1],
-          day: dateFortune
+          day: dateFortune,
+          cardImgs: [`./images/Major Arcana/${cards[0]}.png`, `./images/Major Arcana/${cards[1]}.png`, `./images/Major Arcana/${cards[2]}.png`]
         };
+        console.log(cards[2]);
+        if (dayObj.card2 === undefined) {
+          //console.log('bye');
+          continue;
+        }
+        //console.log('Hi');
         let dayItem = document.createElement('div');
         dayItem.classList.add('day-item');
         dayItem.id = `day-item-${dayObj.day}`;
         const dayDiv = document.getElementById(`fortune-${dayObj.day}`);
-        console.log(`fortune-${dayObj.day}`);
-        console.log(dayObj.text);
-        if(dayObj.card2 !== undefined ) {
-          let dayItemName = document.createElement('div');
-          dayItemName.classList.add('day-item-text');
-          dayItemName.innerHTML = `<p>${dayObj.card1}</p> <p>${dayObj.card2}</p> <p>${dayObj.card3}</p>`;
-          dayItem.appendChild(dayItemName);
-          if (dayDiv) {
-            if (!dayDiv.hasChildNodes()) {
-              dayDiv.appendChild(dayItem);
-            } else {
-              dayDiv.replaceChild(dayItem, dayDiv.firstElementChild);
-            }
+
+          const days = document.querySelectorAll('.calendar div');
+          console.log(days.length);
+          days.forEach((day) => {
+            day.addEventListener('click', () => {
+              document.getElementById('fortune-text').innerText = dayObj.text;
+              document.getElementById('card').style.display = 'block';
+              document.getElementById('overlay').style.display = 'block';
+              document.getElementById('card-title').innerText = day.querySelector('h3').innerText;
+              for (let i = 0; i < dayObj.cardImgs.length; i++) {
+                document.getElementById(`card-${i+1}`).innerText = cards[i];
+                let dayItemImg = document.createElement('img');
+                dayItemImg.classList.add('day-item-img-popup');
+                dayItemImg.src = dayObj.cardImgs[i];
+                document.getElementById(`card-${i+1}`).appendChild(dayItemImg);
+              }
+            });
+
+        });
+        if (dayDiv) {
+          if (!dayDiv.hasChildNodes()) {
+            dayDiv.appendChild(dayItem);
+          } else {
+            dayDiv.replaceChild(dayItem, dayDiv.firstElementChild);
           }
+        }
+        // Populate history images
+        for (let i = 0; i < dayObj.cardImgs.length; i++) {
+          let dayItemImg = document.createElement('img');
+          dayItemImg.classList.add('day-item-img');
+          dayItemImg.src = dayObj.cardImgs[i];
+          dayItem.appendChild(dayItemImg);
         }
       }
     }
@@ -1102,8 +1137,8 @@ try {
 
 
 //
-/*
-document.addEventListener('DOMContentLoaded', function () {
+
+/*document.addEventListener('DOMContentLoaded', function () {
   const days = document.querySelectorAll('.calendar div');
   days.forEach((day, index) => {
       day.addEventListener('click', () => {
@@ -1115,7 +1150,7 @@ document.addEventListener('DOMContentLoaded', function () {
           document.getElementById('card-title').innerText = day.querySelector('h3').innerText;
       });
   });
-});
-*/
+});*/
+
 
 

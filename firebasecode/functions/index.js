@@ -6,8 +6,6 @@
  *
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
-
-
 const {onCall, HttpsError} = require("firebase-functions/v2/https");
 const {getVertexAI, getGenerativeModel} = require("firebase/vertexai-preview");
 const {initializeApp: adminInitApp} = require("firebase-admin/app");
@@ -131,32 +129,32 @@ exports.updateHistoryArray = onCall( async (request) => {
   switch (constDay) {
     case 0:
       // eslint-disable-next-line max-len
-      refArray[0] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      refArray[0] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + "::" + request.data.text;
       break;
     case 1:
       // eslint-disable-next-line max-len
-      refArray[1] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      refArray[1] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + "::" + request.data.text;
       break;
     case 2:
       // eslint-disable-next-line max-len
-      refArray[2] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      refArray[2] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + "::" + request.data.text;
       break;
     case 3:
       // eslint-disable-next-line max-len
-      refArray[3] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      refArray[3] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + "::" + request.data.text;
       break;
     case 4:
       // eslint-disable-next-line max-len
-      refArray[4] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      refArray[4] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + "::" + request.data.text;
       break;
     case 5:
       // eslint-disable-next-line max-len
-      refArray[5] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      refArray[5] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + "::" + request.data.text;
       console.log(refArray[5]);
       break;
     case 6:
       // eslint-disable-next-line max-len
-      refArray[6] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + " ::" + request.data.text;
+      refArray[6] = request.data.card1 + "," + request.data.card2 + "," + request.data.card3 + "::" + request.data.text;
       break;
   }
   return await userRef.update({dailyHistoryArray: refArray});
@@ -190,6 +188,22 @@ exports.dailyReset = onSchedule("every day 00:00", async (event) => {
         });
       })
       .catch((error)=> {
+        console.log("Error resetting daily reset", error.message);
+      });
+});
+
+exports.weeklyHistoryReset = onSchedule("0 0 * * 7", async (event) => {
+  const db = getFirestore(adminapp);
+  return db.collection("users").get()
+      .then((snapshot) => {
+        snapshot.forEach(async (doc) => {
+          const userRef = db.collection("users").doc(doc.id);
+          // eslint-disable-next-line max-len
+          const res = await userRef.update({dailyHistoryArray: ["", "", "", "", "", "", ""]});
+          console.log(res);
+        });
+      })
+      .catch((error) => {
         console.log("Error resetting daily reset", error.message);
       });
 });
