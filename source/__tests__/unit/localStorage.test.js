@@ -1,4 +1,4 @@
-const functions = require('../../scripts.js');
+import functions from '../../scripts.js';
 // basic test to make sure readings array is saved properly onto localStorage
 test('readings are saved on localStorage', () => {
   const readings = [];

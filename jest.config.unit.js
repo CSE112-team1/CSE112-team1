@@ -1,5 +1,5 @@
-module.exports = {
-  testEnvironment: 'jest-environment-jsdom',
+export default {
+  testEnvironment: 'node',
   verbose: true,
   testMatch: ['**/__tests__/unit/*'],
 };
