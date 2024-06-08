@@ -166,6 +166,7 @@ exports.pullHistory = onCall( async (request) => {
   const db = getFirestore(adminapp);
   const userRef = db.collection("users").doc(request.auth.uid);
   const docSnapshot = await userRef.get();
+  console.log(docSnapshot.data().dailyHistoryArray);
   return docSnapshot.data().dailyHistoryArray;
 });
 

@@ -259,6 +259,12 @@ nav {
   padding-right: 10px;
 }
 
+.day-item-text p {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: black;
+}
+
 /* || Main Card Display */
 #display-img-left,
 #display-img-mid,

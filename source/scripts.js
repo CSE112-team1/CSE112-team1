@@ -1,7 +1,8 @@
 
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import firebaseApp, {checkDailyStatus} from './firebaseInit.js';
-import { pullHistory } from '../firebasecode/functions/index.js';
+import {pullHistory} from './firebaseInit.js';
+import firebaseInit from './firebaseInit.js';
 
 // The current reading object displayed on the page
 let currentReading = {};
@@ -281,6 +282,8 @@ const predefinedQuestionResponses = {
  */
 function init() {
   // Add predefined questions to the questions list
+  const app = firebaseApp;
+  const auth = getAuth(app);
   const selectMenu = document.getElementById('question-list');
   for (let i = 0; i < predefinedQuestions.length; i++) {
     let question = document.createElement('option');
@@ -301,10 +304,15 @@ function init() {
   displayHomeScreen();
 
   // Setup history initial values
+  auth.onAuthStateChanged(user => {
+    if(!user) {
+      console.log('No calendar');
+    } else {
+      // Setup calendar
+      renderCalendar();
+    }
+  });
   renderHistory();
-
-  // Setup calendar
-  renderCalendar();
 
   // Setup card flipping functionality
   setupCardFlips();
@@ -653,36 +661,44 @@ export function displayAIReading(isFromHistory) {
 function renderCalendar() {
   let arrayHistory = [];
   pullHistory().then( async (array) => {
-    console.log('status check successful');
+    console.log('array draw successful');
     if(array.data) {
       arrayHistory = array.data;
+      console.log(arrayHistory);
+      for (let dateFortune in arrayHistory) {
+        let parts = arrayHistory[dateFortune].split('::');
+        let cards = parts[0].split(',');
+        let dayObj = {
+          card1: cards[0],
+          card2: cards[1],
+          card3: cards[2],
+          text: parts[1],
+          day: dateFortune
+        };
+        let dayItem = document.createElement('div');
+        dayItem.classList.add('day-item');
+        dayItem.id = `day-item-${dayObj.day}`;
+        const dayDiv = document.getElementById(`fortune-${dayObj.day}`);
+        console.log(`fortune-${dayObj.day}`);
+        console.log(dayObj.text);
+        if(dayObj.card2 !== undefined ) {
+          let dayItemName = document.createElement('div');
+          dayItemName.classList.add('day-item-text');
+          dayItemName.innerHTML = `<p>${dayObj.card1}</p> <p>${dayObj.card2}</p> <p>${dayObj.card3}</p>`;
+          dayItem.appendChild(dayItemName);
+          if (dayDiv) {
+            if (!dayDiv.hasChildNodes()) {
+              dayDiv.appendChild(dayItem);
+            } else {
+              dayDiv.replaceChild(dayItem, dayDiv.firstElementChild);
+            }
+          }
+        }
+      }
     }
+  }).catch(async (error) => {
+    console.log('Array draw error', error.message);
   });
-
-  for (let dailyFortune in arrayHistory){
-    let parts = dailyFortune.split("::");
-    let cards = parts[0].split(",");
-    let dayObj = {
-      card1: cards[0],
-      card2: cards[1],
-      card3: cards[2],
-      text: parts[1],
-      day: arrayHistory.indexOf(dailyFortune)
-    };
-    let dayItem = document.createElement('div');
-    dayItem.classList.add('day-item');
-    dayItem.id = `day-item-${dayObj.id}`;
-  }
-  const dayDiv = document.getElementById(`fortune-${dayObj.day}`);
-    console.log(`fortune-${dayObj.day}`);
-    if (dayDiv){
-      if (!dayDiv.hasChildNodes()){
-        dayDiv.appendChild(dayItem);
-      }
-      else{
-        dayDiv.replaceChild(dayItem, dayDiv.firstElementChild);
-      }
-    }
 }
 
 
@@ -693,9 +709,6 @@ function renderCalendar() {
  */
 function renderHistory() {
   let historyList = [];
-  let weeklyHistory = []; // 0 to 6 (0 indicating Sunday and 6 indicating Saturday)
-
-
   // fetch the stored readings and populate history List
   let readings = getReadings();
   for (let index in readings) {
@@ -706,12 +719,6 @@ function renderHistory() {
       name: reading.name,
       cardImgs: [`./images/Major Arcana/${reading.cards[0]}.png`, `./images/Major Arcana/${reading.cards[1]}.png`, `./images/Major Arcana/${reading.cards[2]}.png`],
     };
-    // Getting the day of the date and push it to the calendar 
-    var date = new Date(reading.time);
-    var indexDay = date.getDay();
-    historyObj.day = indexDay;
-    weeklyHistory[indexDay] = historyObj;
-
     // Pushing to general history
     historyList.push(historyObj);
   }
@@ -791,17 +798,6 @@ function renderHistory() {
 
     // Add item wrapper to the current history display
     history.appendChild(historyItem);
-    // Editing the days in calendar
-    const dayDiv = document.getElementById(`fortune-${dayObj.day}`);
-    console.log(`fortune-${dayObj.day}`);
-    if (dayDiv){
-      if (!dayDiv.hasChildNodes()){
-        dayDiv.appendChild(dayItem);
-      }
-      else{
-        dayDiv.replaceChild(dayItem, dayDiv.firstElementChild);
-      }
-    }
   }
 }
 
@@ -1106,6 +1102,7 @@ try {
 
 
 //
+/*
 document.addEventListener('DOMContentLoaded', function () {
   const days = document.querySelectorAll('.calendar div');
   days.forEach((day, index) => {
@@ -1119,4 +1116,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   });
 });
+*/
+
 
