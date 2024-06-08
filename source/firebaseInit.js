@@ -27,5 +27,6 @@ export const signUpData = httpsCallable(functions, 'signUpData');
 export const updateDailyStatus = httpsCallable(functions, 'updateDailyStatus');
 export const updateHistoryArray = httpsCallable(functions, 'updateHistoryArray');
 export const checkDailyStatus = httpsCallable(functions, 'checkDailyStatus');
+export const pullHistory = httpsCallable(functions, 'pullHistory');
 
 export default firebaseApp;

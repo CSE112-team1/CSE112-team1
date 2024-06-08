@@ -1,6 +1,7 @@
 
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import firebaseApp, {checkDailyStatus} from './firebaseInit.js';
+import { pullHistory } from '../firebasecode/functions/index.js';
 
 // The current reading object displayed on the page
 let currentReading = {};
@@ -302,6 +303,9 @@ function init() {
   // Setup history initial values
   renderHistory();
 
+  // Setup calendar
+  renderCalendar();
+
   // Setup card flipping functionality
   setupCardFlips();
 
@@ -348,6 +352,7 @@ export function generateAIHandler(text, drawnCards) {
   const isFromHistory = false;
   displayAIReading(isFromHistory);
   allowCardFlips = true;
+  renderCalendar();
 }
 
 /**
@@ -506,6 +511,8 @@ function displayHistoryScreen() { // eslint-disable-line no-unused-vars
     tab.classList.remove('active');
   }
 
+
+
   // make history tab active
   document.getElementById('nav-btn-history').classList.add('active');
 
@@ -640,11 +647,53 @@ export function displayAIReading(isFromHistory) {
 }
 
 /**
+ * Displays the calendar of daily readings
+ */
+
+function renderCalendar() {
+  let arrayHistory = [];
+  pullHistory().then( async (array) => {
+    console.log('status check successful');
+    if(array.data) {
+      arrayHistory = array.data;
+    }
+  });
+
+  for (let dailyFortune in arrayHistory){
+    let parts = dailyFortune.split("::");
+    let cards = parts[0].split(",");
+    let dayObj = {
+      card1: cards[0],
+      card2: cards[1],
+      card3: cards[2],
+      text: parts[1],
+      day: arrayHistory.indexOf(dailyFortune)
+    };
+    let dayItem = document.createElement('div');
+    dayItem.classList.add('day-item');
+    dayItem.id = `day-item-${dayObj.id}`;
+  }
+  const dayDiv = document.getElementById(`fortune-${dayObj.day}`);
+    console.log(`fortune-${dayObj.day}`);
+    if (dayDiv){
+      if (!dayDiv.hasChildNodes()){
+        dayDiv.appendChild(dayItem);
+      }
+      else{
+        dayDiv.replaceChild(dayItem, dayDiv.firstElementChild);
+      }
+    }
+}
+
+
+
+
+/**
  * Displays the history of readings by generating the HTML elements
  */
 function renderHistory() {
   let historyList = [];
-    let weeklyHistory = []; // 0 to 6 (0 indicating Sunday and 6 indicating Saturday)
+  let weeklyHistory = []; // 0 to 6 (0 indicating Sunday and 6 indicating Saturday)
 
 
   // fetch the stored readings and populate history List
@@ -678,10 +727,6 @@ function renderHistory() {
     historyItem.classList.add('history-item');
     historyItem.id = `history-item-${historyObj.id}`;
 
-    let dayObj = historyList[index];
-    let dayItem = document.createElement('div');
-    dayItem.classList.add('day-item');
-    dayItem.id = `day-item-${dayObj.id}`;
 
     // Populate history images
     for (let i = 0; i < historyObj.cardImgs.length; i++) {
@@ -690,11 +735,6 @@ function renderHistory() {
       historyItemImg.src = historyObj.cardImgs[i];
       historyItem.appendChild(historyItemImg);
     }
-
-    let dayItemImg = document.createElement('img');
-      dayItemImg.classList.add('day-item-img');
-      dayItemImg.src = dayObj.cardImgs[i];
-      dayItem.appendChild(dayItemImg);
 
     // Populate history name
     let historyItemName = document.createElement('div');
