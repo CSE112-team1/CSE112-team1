@@ -1,6 +1,6 @@
 export default {
   preset: 'jest-puppeteer',
-  testEnvironment: 'node',
+  testEnvironment: 'jest-environment-puppeteer',
   verbose: true,
   testMatch: ['**/__tests__/integration/*'],
 };
