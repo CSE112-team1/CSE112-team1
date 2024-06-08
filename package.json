@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "We are creating a web-app incorporating generative AI.",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/.bin/jest --config jest.config.integration.js",
+    "test": "npx jest --config jest.config.integration.js",
     "lint": "eslint --fix --ext .js,.jsx .",
     "auto-lint-js": "npx eslint ./source/**/*.js --fix",
     "start-server": "npx http-server -p 5500",
@@ -12,9 +12,6 @@
   "author": "cse110-sp23-group02",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
-    "babel-jest": "^29.7.0",
     "eslint": "^8.42.0",
     "eslint-plugin-jest": "^27.2.1",
     "http-server": "^14.1.1",
@@ -23,9 +20,5 @@
     "jest-environment-puppeteer": "^9.0.0",
     "jest-puppeteer": "^9.0.0",
     "jsdoc": "^4.0.2"
-  },
-  "dependencies": {
-    "firebase": "^10.12.2"
-  },
-  "type": "module"
+  }
 }
