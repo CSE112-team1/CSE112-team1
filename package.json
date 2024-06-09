@@ -20,7 +20,8 @@
     "jest-environment-jsdom": "^29.5.0",
     "jest-environment-puppeteer": "^9.0.0",
     "jest-puppeteer": "^9.0.0",
-    "jsdoc": "^4.0.2"
+    "jsdoc": "^4.0.2",
+    "puppeteer": "^22.10.0"
   },
   "jest": {
     "testPathIgnorePatterns": [

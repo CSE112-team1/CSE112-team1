@@ -6,10 +6,9 @@ describe('Basic user flow for Website', () => {
   let page;
 
   beforeAll(async () => {
-    // Launch the browser and create a new page
     browser = await puppeteer.launch({
-      headless: false, // set to false for visual debugging
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      headless: true,  // Ensure Puppeteer runs in headless mode
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--single-process']
     });
     page = await browser.newPage();
     await page.goto('http://127.0.0.1:5500/source/');
