@@ -303,14 +303,14 @@ function init() {
   displayHomeScreen();
 
   // Setup history initial values
-  auth.onAuthStateChanged(user => {
+  /*auth.onAuthStateChanged(user => {
     if(!user) {
       console.log('No calendar');
     } else {
       // Setup calendar
       renderCalendar();
     }
-  });
+  });*/
   renderHistory();
 
   // Setup card flipping functionality
