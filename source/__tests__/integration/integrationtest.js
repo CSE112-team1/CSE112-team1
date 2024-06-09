@@ -9,15 +9,19 @@ describe('Basic user flow for Website', () => {
   it('Generate a fortune', async () => {
     console.log('Generating a fortune...');
     // Select and click generate button
+    await page.waitForSelector('#generate-btn', {visible: true});
+
     const generateButton = await page.$('#generate-btn');
     await generateButton.click();
 
     // Select the text of the fortune
+    await page.waitForSelector('#meaning', {visible: true});
     const fortuneReading = await page.$('#meaning');
 
-    const displayPropertyValue = await fortuneReading.getProperty('style');
-    const displayValueHandle = await displayPropertyValue.getProperty('display');
-    const displayValue = await displayValueHandle.jsonValue();
+    // const displayPropertyValue = await fortuneReading.getProperty('style');
+    // const displayValueHandle = await displayPropertyValue.getProperty('display');
+    // const displayValue = await displayValueHandle.jsonValue();
+    const displayValue = await page.evaluate(element => element.style.display, fortuneReading);
 
     // Expect the `display` property value to be "block"
     expect(displayValue).toBe('block');
@@ -43,16 +47,21 @@ describe('Basic user flow for Website', () => {
   it('Checking History', async () => {
       console.log('Checking History...');
       // Select and click history button
+      await page.waitForSelector('a', {visible: true});
+
       const buttons = await page.$$('a');
       console.log(buttons);
       const histButton = buttons[1];
       await histButton.click();
 
       // Select the most recent fortune to be displayed
+      await page.waitForSelector('.history-item-btn-display', {visible: true});
       const histDisplayButton = await page.$('.history-item-btn-display');
       await histDisplayButton.click();
 
       // Expect fortune displayed to not be empty
+      await page.waitForSelector('#meaning', {visible: true});
+
       const meaning = await page.$('#meaning');
       let exists =false;
       let classList = await meaning.getProperty('classList');
