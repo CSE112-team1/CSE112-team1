@@ -15,9 +15,11 @@ describe('Basic user flow for Website', () => {
   });
 
   afterAll(async () => {
-    await browser.close();
+    if (browser) {
+      await browser.close();
+    }
   });
-
+  
 
   // Next user will generate a fortune 
   it('Generate a fortune', async () => {
