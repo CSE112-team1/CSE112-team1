@@ -281,8 +281,6 @@ const predefinedQuestionResponses = {
  */
 function init() {
   // Add predefined questions to the questions list
-  const app = firebaseApp;
-  const auth = getAuth(app);
   const selectMenu = document.getElementById('question-list');
   for (let i = 0; i < predefinedQuestions.length; i++) {
     let question = document.createElement('option');
@@ -302,7 +300,7 @@ function init() {
   // On load, we should start at the home screen
   displayHomeScreen();
 
-  // Setup history initial values
+  // Setup history initial values (Commented out to reduce function calls)
   /*auth.onAuthStateChanged(user => {
     if(!user) {
       console.log('No calendar');
