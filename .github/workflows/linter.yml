@@ -8,7 +8,8 @@ name: Lint Code Base
 on:
   push:
 
-    branches: [dev, main,AI_loading]
+    branches: [dev, main,history-calendar2]
+
 
 
   pull_request:
