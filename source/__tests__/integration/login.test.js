@@ -1,6 +1,9 @@
+const puppeteer = require('puppeteer');
+
 function mockGetAuth() {
   return 'mockAuth123'; 
 } 
+
 function mockSignInWithEmailAndPassword(auth,user,password) {
   if (auth == 'mockAuth123') { 
     if (user == 'mock@gmail.com' && password == 'mocking123') { 
@@ -12,13 +15,30 @@ function mockSignInWithEmailAndPassword(auth,user,password) {
   }
 }
 
-
 describe('Login Scenario', () => {
   // Visit the web app
+  let browser;
+  let page;
+
   beforeAll(async () => {
-    await page.goto('http://127.0.0.1:5500/source/login.html'); 
-  }); 
+    // Launch the browser and create a new page
+    browser = await puppeteer.launch({
+      headless: true,  // Ensure Puppeteer runs in headless mode
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--single-process']
+    });
+    page = await browser.newPage();
+    await page.goto('http://127.0.0.1:5500/source/login.html');
+  });
+
+  afterAll(async () => {
+    if (browser) {
+      await browser.close();
+    }
+  });
+  
   it('Incorrect Email', async () => { 
+    // await page.waitForSelector('#login', {visible: true});
+    // await page.waitForSelector('#password', {visible: true});
     await page.evaluate( () => document.getElementById('login').value = ''); 
     await page.evaluate( () => document.getElementById('password').value = ''); 
     await page.type('input#login', 'fail@gmail.com'); 
@@ -38,6 +58,7 @@ describe('Login Scenario', () => {
     }); 
     await expect(message).toBe('Invalid Creds!'); 
   }); 
+
   it('Incorrect Password', async () => { 
     await page.evaluate( () => document.getElementById('login').value = ''); 
     await page.evaluate( () => document.getElementById('password').value = ''); 
@@ -58,6 +79,7 @@ describe('Login Scenario', () => {
     }); 
     await expect(message).toBe('Invalid Creds!'); 
   }); 
+
   it('Correct values', async () => { 
     await page.evaluate( () => document.getElementById('login').value = ''); 
     await page.evaluate( () => document.getElementById('password').value = ''); 
