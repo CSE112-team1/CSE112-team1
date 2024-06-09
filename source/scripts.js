@@ -2,7 +2,6 @@
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import firebaseApp, {checkDailyStatus} from './firebaseInit.js';
 import {pullHistory} from './firebaseInit.js';
-import firebaseInit from './firebaseInit.js';
 
 // The current reading object displayed on the page
 let currentReading = {};
@@ -430,6 +429,7 @@ function displayHomeScreen() {
  */
 function displayDailyFortuneScreen() {
   document.getElementById('daily-generate-btn').hidden = true;
+
   const app = firebaseApp;
   const auth = getAuth(app);
   auth.onAuthStateChanged(user => {
