@@ -1,9 +1,24 @@
 
+const puppeteer = require('puppeteer');
+
 describe('Basic user flow for Website', () => {
-  // Visit the web app
+  let browser;
+  let page;
+
   beforeAll(async () => {
+    // Launch the browser and create a new page
+    browser = await puppeteer.launch({
+      headless: false, // set to false for visual debugging
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+    page = await browser.newPage();
     await page.goto('http://127.0.0.1:5500/source/');
   });
+
+  afterAll(async () => {
+    await browser.close();
+  });
+
 
   // Next user will generate a fortune 
   it('Generate a fortune', async () => {
@@ -100,3 +115,4 @@ describe('Basic user flow for Website', () => {
   });
 
 });
+

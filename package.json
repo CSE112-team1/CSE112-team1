@@ -21,5 +21,16 @@
     "jest-environment-puppeteer": "^9.0.0",
     "jest-puppeteer": "^9.0.0",
     "jsdoc": "^4.0.2"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/firebasecode/functions/tests/index.test.js",
+      "<rootDir>/source/__tests__/unit/localStorage.test.js"
+    ],
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/firebasecode/**",
+      "!**/source/__tests__/unit/localStorage.test.js"
+    ]
   }
 }
