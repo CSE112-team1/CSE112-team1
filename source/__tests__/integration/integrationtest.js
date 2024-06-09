@@ -45,31 +45,27 @@ describe('Basic user flow for Website', () => {
 
   // User check history
   it('Checking History', async () => {
-      console.log('Checking History...');
-      // Select and click history button
-      await page.waitForSelector('a', {visible: true});
+    console.log('Checking History...');
+    await page.waitForSelector('#nav-btn-history', {visible: true});
+    const historyButton = await page.$('#nav-btn-history');
+    await historyButton.click();
+    
+    // Wait for the history item button to appear and click it
+    await page.waitForSelector('.history-item-btn-display', {visible: true});
+    const histDisplayButton = await page.$('.history-item-btn-display');
+    await histDisplayButton.click();
 
-      const buttons = await page.$$('a');
-      console.log(buttons);
-      const histButton = buttons[1];
-      await histButton.click();
+    // Wait for the #meaning section to be visible and check if it has content
+    await page.waitForSelector('#meaning', {visible: true});
+    const content = await page.evaluate(() => {
+        const element = document.querySelector('#meaning');
+        return element ? element.textContent.trim().length > 0 : false;
+    });
 
-      // Select the most recent fortune to be displayed
-      await page.waitForSelector('.history-item-btn-display', {visible: true});
-      const histDisplayButton = await page.$('.history-item-btn-display');
-      await histDisplayButton.click();
+    expect(content).toBe(true); // Expect that there is significant content
+});
 
-      // Expect fortune displayed to not be empty
-      await page.waitForSelector('#meaning', {visible: true});
 
-      const meaning = await page.$('#meaning');
-      let exists =false;
-      let classList = await meaning.getProperty('classList');
-      if(classList.length !== 0){
-        exists = true;
-      }
-      expect(exists).toBe(true);
-  });
 
   // User deletes fortune from history
   it('Deleting a fortune', async () => {
