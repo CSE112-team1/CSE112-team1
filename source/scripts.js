@@ -954,7 +954,7 @@ function generateReading(question) {
 /**
  * Creates a reading object from the user input text
  * @param {string} genAnswer Daily fortune text returned by vertexAI
- * @param {[]} drawnCards Randomized cards from drawing cards in vertexAI.js
+ * @param {Array} drawnCards Randomized cards from drawing cards in vertexAI.js
  * @returns {Object} The reading object for AI response
  */
 function generateAiReading(genAnswer, drawnCards) {
