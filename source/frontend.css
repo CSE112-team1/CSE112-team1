@@ -57,7 +57,7 @@ h2 {
     justify-content: center;
     width: 100%;
     min-height: 100%;
-    padding: 20px;
+    padding: 5%;
 }
 
 /* Styles for inactive tab headings, setting the color */
@@ -79,13 +79,12 @@ h2.active {
 /* FORM BLOCK */
 #form-block {
     background: white;
-    padding: 30px;
     width: 90%;
     max-width: 450px;
     position: relative;
     padding: 0px;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 25px;
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     /* text-align: center; */
 
@@ -100,7 +99,7 @@ a {
 
 /* FORM TYPOGRAPHY */
 #form-footer {
-    padding-bottom: 25px;
+    padding-bottom: 2%;
     text-align: center;
 }
 
@@ -127,7 +126,8 @@ input[type=submit] {
     font-size: 13px;
     text-transform: uppercase;
     border-radius: 3px;
-    margin: 5px 20px 30px 20px;
+    /* margin: 5px 20px 20px 20px; */
+    margin: 5% 20% 3% 20%;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -229,8 +229,8 @@ label {
 
 /* Container adjustments for form alignment */
 #form-block {
-    padding-top: 60px;
-    padding-bottom: 30px;
+    padding-top: 30px;
+    padding-bottom: 20px;
     width: 85%;
     margin: auto;
 }
@@ -244,11 +244,50 @@ input[type=email], input[type=password] {
 
 /* Enhance submit button appearance */
 input[type=submit] {
-    margin-top: 20px;
+    margin-top: 1%;
 }
 
 /* Adjust 'Forgot Password?' link positioning */
 #form-footer {
     margin-top: 20px; /* Space above the forgot password link */
     font-size: 12px;
+}
+
+
+@media screen and (max-width: 1050px) {
+
+    #form-block {
+        width: 90%;
+    }
+}
+@media screen and (max-width: 968px) {
+
+    #form-block {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 755px) {
+
+    #form-block {
+        width: 60%;
+        height: 40%;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+
+    #form-block {
+        width: 70%;
+        height: 40%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    #form-block {
+        width: 70%;
+        height: 40%;
+    }
 }
