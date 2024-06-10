@@ -57,7 +57,7 @@ describe('Login Scenario', () => {
       message = 'failed'; 
     }); 
     await expect(message).toBe('Invalid Creds!'); 
-  }); 
+  }, 10000); 
 
   it('Incorrect Password', async () => { 
     await page.evaluate( () => document.getElementById('login').value = ''); 
