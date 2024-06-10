@@ -11,7 +11,7 @@ describe('Basic user flow for Website', () => {
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--single-process']
     });
     page = await browser.newPage();
-    await page.goto('http://127.0.0.1:5500/source/');
+    await page.goto('http://127.0.0.1:5500/source/index.html');
   });
 
   afterAll(async () => {
@@ -82,27 +82,66 @@ describe('Basic user flow for Website', () => {
 });
 
 
-
   // User deletes fortune from history
-  it('Deleting a fortune', async () => {
-      console.log('Deleting a fortune...');
-      // Select and click delete button
-      const deleteButton = await page.$('.history-item-btn-delete');
-      await deleteButton.click();
+  // it('Deleting a fortune', async () => {
+  //   console.log('Navigating to History tab...');
+  //   // Ensure the navigation to the history tab is done
+  //   await page.waitForSelector('#nav-btn-history', {visible: true});
+  //   const historyButton = await page.$('#nav-btn-history');
+  //   await historyButton.click();
 
-      // Get local storage
-      const currentStorage = await page.evaluate(() => {
+  //     console.log('Deleting a fortune...');
+  //     // Select and click delete button
+  //     await page.waitForSelector('.history-item-btn-delete', {visible: true});
+  //     const deleteButton = await page.$('.history-item-btn-delete');
+  //     await deleteButton.click();
+
+  //     // Get local storage
+  //     await page.waitForSelector('readings', {visible: true});
+
+  //     const currentStorage = await page.evaluate(() => {
+  //       return localStorage.getItem('readings');
+  //     });
+
+  //     // Expect local storage to be empty
+  //     expect(currentStorage).toBe('[]');
+  // });
+
+
+  it('Deleting a fortune', async () => {
+    console.log('Navigating to History tab...');
+    // Ensure the navigation to the history tab is done
+    await page.waitForSelector('#nav-btn-history', {visible: true});
+    const historyButton = await page.$('#nav-btn-history');
+    await historyButton.click();
+  
+    console.log('Deleting a fortune from history...');
+    // Wait for the delete button to be visible in the history tab
+    await page.waitForSelector('.history-item-btn-delete', {visible: true});
+    const deleteButtons = await page.$$('.history-item-btn-delete');
+  
+    if (deleteButtons.length > 0) {
+      await deleteButtons[0].click(); // Adjust index as needed based on which item to delete
+  
+      // Optional: Check the UI for updates or check local storage
+      const storageAfterDelete = await page.evaluate(() => {
         return localStorage.getItem('readings');
       });
-
-      // Expect local storage to be empty
-      expect(currentStorage).toBe('[]');
-  });
-
+      console.log('Storage after delete:', storageAfterDelete);
+  
+      // Expect local storage to be empty or to reflect deletion
+      expect(storageAfterDelete).toBe('[]');
+    } else {
+      throw new Error('No delete buttons found');
+    }
+  }, 10000); // Extended timeout for this test
+  
+  
   // User returns to homepage
   it('Return to homepage', async () => {
      console.log('Returning to home...');
      // Select and click home button
+     
      const homeButton = await page.$('#nav-btn-home');
      await homeButton.click();
 

@@ -2,7 +2,7 @@ name: Jest Tests
 
 on:
   push:
-    branches: [dev, main,debug_cicd]
+    branches: [dev, main,dev_test]
   pull_request:
     branches: [main]
 
