@@ -1,6 +1,6 @@
 
 import {drawCards, generateAIHandler} from './scripts.js';
-import {model, updateDailyStatus} from './firebaseInit.js';
+import {model, updateDailyStatus, updateHistoryArray} from './firebaseInit.js';
 // eslint-disable-next-line no-unused-vars
 
 import {cards} from './scripts.js';
@@ -79,6 +79,7 @@ genButton.addEventListener('click', function(event)  {
         .then((text) => {
             updateDailyStatus().then(async() => {
                 console.log('Successful DB update');
+                updateHistoryArray({card1: drawnCards[0], card2: drawnCards[1], card3: drawnCards[2], text:text});
             }).catch(async(error) => {
                 console.log('db update failed', error.message);
             });
@@ -93,5 +94,4 @@ genButton.addEventListener('click', function(event)  {
             stopShuffle();
         });
 });
-
 

@@ -1,6 +1,7 @@
 
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import firebaseApp, {checkDailyStatus} from './firebaseInit.js';
+import {pullHistory} from './firebaseInit.js';
 
 // The current reading object displayed on the page
 let currentReading = {};
@@ -299,7 +300,15 @@ function init() {
   // On load, we should start at the home screen
   displayHomeScreen();
 
-  // Setup history initial values
+  // Setup history initial values (Commented out to reduce function calls)
+  /*auth.onAuthStateChanged(user => {
+    if(!user) {
+      console.log('No calendar');
+    } else {
+      // Setup calendar
+      renderCalendar();
+    }
+  });*/
   renderHistory();
 
   // Setup card flipping functionality
@@ -418,6 +427,7 @@ function displayHomeScreen() {
  */
 function displayDailyFortuneScreen() {
   document.getElementById('daily-generate-btn').hidden = true;
+
   const app = firebaseApp;
   const auth = getAuth(app);
   auth.onAuthStateChanged(user => {
@@ -501,10 +511,23 @@ function displayDailyFortuneScreen() {
  * For this screen, we only want history related items, all others buttons/images should be hidden
  */
 function displayHistoryScreen() { // eslint-disable-line no-unused-vars
+  const app = firebaseApp;
+  const auth = getAuth(app);
+  auth.onAuthStateChanged(user => {
+    if(!user) {
+      console.log('No calendar');
+    } else {
+      // Setup calendar
+      renderCalendar();
+    }
+  });
+
   // remove active class from all tabs
   for (const tab of document.querySelectorAll('.nav-item')) {
     tab.classList.remove('active');
   }
+
+
 
   // make history tab active
   document.getElementById('nav-btn-history').classList.add('active');
@@ -557,7 +580,7 @@ export function displayReading(isFromHistory) {
   document.querySelector('.card-container').style.display = 'flex';
   document.getElementById('save').hidden = false;
   document.getElementById('meaning-section').hidden = false;
-  document.getElementById('history-section').hidden = false;
+  document.getElementById('history-section').hidden = true;
   document.getElementById('daily-generate-btn').hidden = true;
   if (isFromHistory) {
     // hide question list and generate button
@@ -640,11 +663,85 @@ export function displayAIReading(isFromHistory) {
 }
 
 /**
+ * Displays the calendar of daily readings
+ */
+
+function renderCalendar() {
+  let arrayHistory = [];
+  pullHistory().then( async (array) => {
+    console.log('array draw successful');
+    if(array.data) {
+      arrayHistory = array.data;
+      console.log(arrayHistory);
+      for (let dateFortune in arrayHistory) {
+        let parts = arrayHistory[dateFortune].split('::');
+        let cards = parts[0].split(',');
+        let dayObj = {
+          card1: cards[0],
+          card2: cards[1],
+          card3: cards[2],
+          text: parts[1],
+          day: dateFortune,
+          cardImgs: [`./images/Major Arcana/${cards[0]}.png`, `./images/Major Arcana/${cards[1]}.png`, `./images/Major Arcana/${cards[2]}.png`]
+        };
+        console.log(cards[2]);
+        if (dayObj.card2 === undefined) {
+          //console.log('bye');
+          continue;
+        }
+        //console.log('Hi');
+        let dayItem = document.createElement('div');
+        dayItem.classList.add('day-item');
+        dayItem.id = `day-item-${dayObj.day}`;
+        const dayDiv = document.getElementById(`fortune-${dayObj.day}`);
+
+          const days = document.querySelectorAll('.calendar div');
+          console.log(days.length);
+          days.forEach((day) => {
+            day.addEventListener('click', () => {
+              document.getElementById('fortune-text').innerText = dayObj.text;
+              document.getElementById('card').style.display = 'block';
+              document.getElementById('overlay').style.display = 'block';
+              document.getElementById('card-title').innerText = day.querySelector('h3').innerText;
+              for (let i = 0; i < dayObj.cardImgs.length; i++) {
+                document.getElementById(`card-${i+1}`).innerText = cards[i];
+                let dayItemImg = document.createElement('img');
+                dayItemImg.classList.add('day-item-img-popup');
+                dayItemImg.src = dayObj.cardImgs[i];
+                document.getElementById(`card-${i+1}`).appendChild(dayItemImg);
+              }
+            });
+
+        });
+        if (dayDiv) {
+          if (!dayDiv.hasChildNodes()) {
+            dayDiv.appendChild(dayItem);
+          } else {
+            dayDiv.replaceChild(dayItem, dayDiv.firstElementChild);
+          }
+        }
+        // Populate history images
+        for (let i = 0; i < dayObj.cardImgs.length; i++) {
+          let dayItemImg = document.createElement('img');
+          dayItemImg.classList.add('day-item-img');
+          dayItemImg.src = dayObj.cardImgs[i];
+          dayItem.appendChild(dayItemImg);
+        }
+      }
+    }
+  }).catch(async (error) => {
+    console.log('Array draw error', error.message);
+  });
+}
+
+
+
+
+/**
  * Displays the history of readings by generating the HTML elements
  */
 function renderHistory() {
   let historyList = [];
-
   // fetch the stored readings and populate history List
   let readings = getReadings();
   for (let index in readings) {
@@ -655,6 +752,7 @@ function renderHistory() {
       name: reading.name,
       cardImgs: [`./images/Major Arcana/${reading.cards[0]}.png`, `./images/Major Arcana/${reading.cards[1]}.png`, `./images/Major Arcana/${reading.cards[2]}.png`],
     };
+    // Pushing to general history
     historyList.push(historyObj);
   }
 
@@ -668,6 +766,7 @@ function renderHistory() {
     let historyItem = document.createElement('div');
     historyItem.classList.add('history-item');
     historyItem.id = `history-item-${historyObj.id}`;
+
 
     // Populate history images
     for (let i = 0; i < historyObj.cardImgs.length; i++) {
@@ -1033,3 +1132,23 @@ try {
 } catch {
   // do nothing, running in browser
 }
+
+
+//
+
+/*document.addEventListener('DOMContentLoaded', function () {
+  const days = document.querySelectorAll('.calendar div');
+  days.forEach((day, index) => {
+      day.addEventListener('click', () => {
+        //Get the fortune text from the backend and insert it here maybe?
+        const fortuneText = `Your fortune for ${day.querySelector('h3').innerText} is this right here blah blah!`;
+        document.getElementById('fortune-text').innerText = fortuneText;
+          document.getElementById('card').style.display = 'block';
+          document.getElementById('overlay').style.display = 'block';
+          document.getElementById('card-title').innerText = day.querySelector('h3').innerText;
+      });
+  });
+});*/
+
+
+

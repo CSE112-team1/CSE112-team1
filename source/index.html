@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Tarot Card Reader</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
 </head>
 
 <body>
@@ -101,11 +102,52 @@
     <!-- History -->
     <section id="history-section">
         <div class="container-col">
-            <h2>History</h2>
+            <h2>Daily Fortune</h2>
+            <div class="calendar" id="calendar">
+                <div>
+                    <h3>Sunday</h3>
+                    <div id="fortune-0"></div>
+                </div>
+                <div>
+                    <h3>Monday</h3>
+                    <div id="fortune-1"></div>
+                </div>
+                <div>
+                    <h3>Tuesday</h3>
+                    <div id="fortune-2"></div>
+                </div>
+                <div>
+                    <h3>Wednesday</h3>
+                    <div id="fortune-3"></div>
+                </div>
+                <div>
+                    <h3>Thursday</h3>
+                    <div id="fortune-4"></div>
+                </div>
+                <div>
+                    <h3>Friday</h3>
+                    <div id="fortune-5"></div>
+                </div>
+                <div>
+                    <h3>Saturday</h3>
+                    <div id="fortune-6"></div>
+                </div>
+            </div>
+            <h2>Local History</h2>
             <div class="container-col" id="history"></div>
         </div>
     </section>
-
+    <div class="overlay" id="overlay"></div>
+    <div class="card" id="card">
+        <h3 id="card-title"></h3>
+        <div id="card-1"></div>
+        <div id="card-2"></div>
+        <div id="card-3"></div>
+        <div id="fortune-text"></div>
+        <div class="center-button">
+            <button onclick="closeCard()" id="close-btn-card">Close</button>
+        </div>
+    </div>
     <!-- Renaming Popup for History -->
     <section>
         <div id="popup" class="popup-container">
@@ -117,10 +159,25 @@
         </div>
     </section>
 
+    <!-- Day Click Popup -->
+    <section>
+        <div id="day-popup" class="popup-container">
+            <div class="popup-box">
+                <button id="close-day-popup" class="close-popup-btn">Close</button>
+                <div id="day-popup-body"></div>
+            </div>
+        </div>
+    </section>
+
     <!--Main Script File-->
     <script type="module" src="scripts.js"></script>
     <script type="module" src="vertexAI.js"></script>
 
 </body>
-
+<script>
+    function closeCard() {
+        document.getElementById('card').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    }
+</script>
 </html>
