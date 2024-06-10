@@ -17,6 +17,29 @@ body {
   animation: movement 10s linear infinite;
 }
 
+/* Login/Signup */
+.cloud-link-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+}
+
+.cloud-link {
+  display: inline-block;
+  padding: 30px 22px;
+  font-size: 16px;
+  color: #a0c4ff;;
+  background-image: url("./images/logincloud.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+  border: none;
+  text-decoration: none;
+  position: relative;
+}
+
+
 /* Cloud movement */
 @keyframes movement {
   0% {
@@ -73,22 +96,24 @@ h3 {
   color: black;
   margin-top: 5%;
   font-size: x-large;
-  margin-right: 10px;
   text-shadow: 2px 2px #687bd2;
 }
 
 p {
   color: white;
-  text-shadow: 2px 2px #687bd2;
   font-weight: 400;
   font-size: 20px;
   line-height: 32px;
 }
 
+#meaning-section {
+  padding: 0 5vw;
+}
+
 /* || Buttons */
 button {
   background-image: linear-gradient(to right, #70c4e9, #6b99e9, #04befe, #72a2ea);
-  box-shadow: 0 4px 15px 0 rgba(65 132 234 75%);
+  box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 75%);
   text-align: center;
   width: 80px;
   font-size: 16px;
@@ -122,6 +147,12 @@ button:focus {
   height: 33px;
 }
 
+#daily-generate-btn {
+  margin-top: 25px;
+  width: 120px;
+  height: 33px;
+}
+
 .history-item-btn {
   margin-top: 5px;
 }
@@ -136,7 +167,7 @@ nav {
   background-color: #fff;
   padding: 0 40px;
   border-radius: 40px;
-  box-shadow: 0 10px 40px rgba(159 162 177 80%);
+  box-shadow: 0 10px 40px rgba(159, 162, 177, 80%);
 }
 
 .nav-item {
@@ -150,7 +181,7 @@ nav {
   position: relative;
 }
 
-.nav-item::before {
+.nav-item::before, .active::before {
   content: "";
   position: absolute;
   bottom: -6px;
@@ -163,12 +194,12 @@ nav {
   transition: 0.3s;
 }
 
-.nav-item:not(.is-active):hover::before {
+.nav-item:not(.is-active):hover::before, .active::before {
   opacity: 1;
   bottom: 0;
 }
 
-.nav-item:not(.is-active):hover {
+.nav-item:not(.is-active):hover, .active::before {
   color: #333;
 }
 
@@ -196,7 +227,7 @@ nav {
 /* || Meaning Display */
 #meaning {
   display: flex;
-  width: 750px;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -226,6 +257,26 @@ nav {
 .history-item-text {
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.day-item-text p {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: black;
+}
+
+.day-item-img {
+  width: 75px;
+  height: 100px;
+  border-radius: 5px;
+  margin: 5px 2px;
+}
+
+.day-item-img-popup {
+  width: 180px;
+  height: 250px;
+  border-radius: 5px;
+  margin: 1% 6%;
 }
 
 /* || Main Card Display */
@@ -367,7 +418,7 @@ textarea {
   background-color: #bfdfec;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0 0 0 30%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 30%);
 }
 
 .popup-box input {
@@ -409,12 +460,48 @@ textarea {
     height: 308px;
   }
   #display-back-left, #display-back-mid, #display-back-right {
+    width: 297px;
+    height: 331px;
+  }
+
+  .card-text {
     width: 240px;
-    height: 308px;
+  }
+
+  textarea {
+    width: 95%;
+    height: 90%;
+    padding: 2px;
+  }
+
+  .card-title {
+    font-size: medium;
+    text-shadow: 1.7px 1.7px #687bd2;
+  }
+
+  #calendar.calendar  {
+    width: 100%;
+    height: 20%;
+  }
+
+  .day-item-img-popup {
+    width: 100%;
+    height: 100%;
   }
 }
 
 @media screen and (max-width: 968px) {
+
+.cloud-link {
+    font-size: 14px;
+    padding: 27px 20px; 
+    background-size: 100% auto;
+}
+.cloud-link-container {
+    top: 10px;
+    right: 10px;
+}
+
   h1 {
     font-size: 7.5rcap;
   }
@@ -425,12 +512,49 @@ textarea {
   }
 
   #display-back-left, #display-back-mid, #display-back-right {
-    width: 200px;
-    height: 256px;
+    width: 247px;
+    height: 275px;
   }
+
+  .card-text {
+    width: 200px;
+  }
+
+  textarea {
+    font-size: xx-small;
+  }
+
+  .card-title {
+    font-size: x-small;
+    text-shadow: 1.3px 1.3px #687bd2;
+  }
+
+  #calendar.calendar  {
+    width: 100%;
+    height: 20%;
+  }
+  .day-item-img-popup {
+    width: 100%;
+    height: 100%;
+  }
+
 }
 
-@media screen and (max-width: 750px) {
+/*
+ * start using html <dialog> for card meaning
+ */
+@media screen and (max-width: 755px) {
+
+.cloud-link {
+    font-size: 11px;
+    padding: 22px 17px; 
+    background-size: 100% auto;
+}
+.cloud-link-container {
+    top: 5px;
+    right: 5px;
+}
+
   h1 {
     font-size: 6rcap;
   }
@@ -444,9 +568,33 @@ textarea {
     width: 150px;
     height: 167px;
   }
+
+  .card-text {
+    width: 150px;
+  }
+
+  textarea {
+    width: 100px;
+    height: 100px;
+  }
+
+  #calendar.calendar  {
+    width: 70%;
+    height: 20%;
+  }
+  .day-item-img-popup {
+    width: 100%;
+    height: 100%;
+  }
+
+  #fortune-text{
+    font-size: 0.3rem;
+  }
+  
 }
 
 @media screen and (max-width: 600px) {
+
   h1 {
     font-size: 4.5rcap;
   }
@@ -477,15 +625,32 @@ textarea {
     height: 128px;
     border-radius: 10px;
   }
+
+  #calendar.calendar  {
+    width: 80%;
+    height: 20%;
+  }
+
 }
 
 @media screen and (max-width: 470px) {
+  .cloud-link {
+    font-size: 9px;
+    padding: 20px 18px; 
+    background-size: 100% auto;
+}
+  .cloud-link-container {
+    top:  3px;
+    right: 3px;
+  }
+
   h1 {
     font-size: 3.5rcap;
   }
 }
 
 @media screen and (max-width: 460px) {
+
   nav {
     margin-top: 15px;
     padding-left: 30px;
@@ -581,4 +746,150 @@ textarea {
   h1 {
     font-size: 1.2rcap;
   }
+}
+
+
+/*Calender  */
+#calendar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-around;
+  background: white;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  box-shadow: 5px 5px 5px rgba(0 0 0 / 20%);
+  flex-direction: row; 
+  width: 100%;
+}
+
+#calendar h3 {
+  font-size: 1.3rem;
+  width: 4;
+  text-shadow: none;
+  color: #445566;
+
+}
+
+#calendar > * > div {
+  padding: 2rem 0rem;
+}
+
+#calendar > * {
+  flex: 1 0 0;
+  padding: 0 0.5rem;
+  position: relative;
+}
+
+
+#calendar > *:not(:last-child) {
+  position: relative;
+  box-shadow: 8px 0 10px -5px rgba(0, 0, 0, 0.1); 
+}
+
+
+
+.card {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px; /* Increased padding for a larger card */
+  border-radius: 25px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Increased box shadow */
+  z-index: 1000;
+  flex-direction: row; /* Align children horizontally */
+  justify-content: center; /* Center the items horizontally */
+  align-items: center; 
+  justify-content: space-around; /* Distribute space around the images */
+
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+#card-title {
+  text-align: center;
+  font-size: 1.5rem;
+  width: 4;
+  text-shadow: none;
+  color: #445566;
+
+  
+}
+.center-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+/* card shuffle */
+.hide {
+  display: none;
+}
+
+
+@keyframes moveRight {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes moveLeft {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-100%);
+  }
+}
+
+.card-1 {
+  animation: moveRight 2s;
+}
+
+.card-3 {
+  animation: moveLeft 2s;
+}
+
+
+#fortune-0, #fortune-1, #fortune-2, #fortune-3, #fortune-4, #fortune-5, #fortune-6 {
+  width: 100%;  
+  padding: 15px;
+  overflow: hidden; 
+  margin-left: -5%; 
+  margin-top: -25%; 
+}
+
+#fortune-0:empty, #fortune-1:empty, #fortune-2:empty, #fortune-3:empty, #fortune-4:empty, #fortune-5:empty, #fortune-6:empty {
+  display: none;
+}
+
+#card-1, #card-2, #card-3 {
+  display: inline-block;
+  width: 30%;
+  margin-left: 2%;
+  padding-bottom: 10px;
+  font-size: 0px; /* Sets the size of the font */
+
+}
+
+#fortune-text{
+  font-size: 1rem;
+  color: #445566;
+  text-align: center;
+  padding: 5%;
 }

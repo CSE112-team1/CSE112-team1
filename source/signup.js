@@ -1,25 +1,9 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js';
-// import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js';
-import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js';
-// TODO: Add SDKs for Firebase products that you want to use
+import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import firebaseApp, {signUpData} from './firebaseInit.js';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: 'cse-112-tarot-card-reader.firebaseapp.com',
-  projectId: 'cse-112-tarot-card-reader',
-  storageBucket: 'cse-112-tarot-card-reader.appspot.com',
-  messagingSenderId: '610618527051',
-  appId: '1:610618527051:web:b803c1458dd133bc6c6cce',
-  measurementId: 'G-J13L8M0WRX'
-};
-
-// Initialize Firebase
-initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
+const app = firebaseApp;
 //register button
 const register = document.getElementById('signup-button');
 register.addEventListener('click', function (event) {
@@ -29,14 +13,22 @@ register.addEventListener('click', function (event) {
   const email = document.getElementById('login').value;
   const password = document.getElementById('password').value;
 
-  const auth = getAuth();
+  const auth = getAuth(app);
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed up 
       // const user = userCredential.user;
       console.log('User created:', userCredential.user);
-      alert('Creating Account...');
-      // ...
+      alert('Created Account!');
+      signUpData().then(
+          async() => {
+              console.log('Successful db write');
+              window.location.href = 'index.html'; //eslint-disable-line
+          }
+      ).catch( async(error) => {
+          console.log('db write failed', error.message);
+          window.location.href = 'index.html'; //eslint-disable-line
+      });
     })
     .catch((error) => {
       const errorMessage = error.message;

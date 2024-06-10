@@ -1,13 +1,18 @@
 
+import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import firebaseApp, {checkDailyStatus} from './firebaseInit.js';
+import {pullHistory} from './firebaseInit.js';
 
 // The current reading object displayed on the page
 let currentReading = {};
 
 // Global to determine when to allow card flips
 let allowCardFlips = false;
+// Global to determine if daily fortune has been generated
+let statusCheck = false;
 
 // The drawable tarot cards (only the Major Arcana for now)
-const cards = [
+export const cards = [
   'The Fool', 'The Magician', 'The High Priestess',
   'The Empress', 'The Emperor', 'The Hierophant',
   'The Lovers', 'The Chariot', 'Strength',
@@ -277,16 +282,17 @@ const predefinedQuestionResponses = {
 function init() {
   // Add predefined questions to the questions list
   const selectMenu = document.getElementById('question-list');
-  for (var i = 0; i < predefinedQuestions.length; i++) {
-    var question = document.createElement('option');
+  for (let i = 0; i < predefinedQuestions.length; i++) {
+    let question = document.createElement('option');
     question.text = predefinedQuestions[i];
     selectMenu.appendChild(question);
   }
-
+  
   // Add event listeners to buttons
   document.getElementById('generate-btn').addEventListener('click', generateHandler);
   document.getElementById('save').addEventListener('click', saveHandler);
   document.getElementById('nav-btn-history').addEventListener('click', displayHistoryScreen);
+  document.getElementById('nav-btn-daily-fortune').addEventListener('click', displayDailyFortuneScreen);
   document.getElementById('nav-btn-home').addEventListener('click', displayHomeScreen);
   document.getElementById('popup-close-btn').addEventListener('click', closePopup);
 
@@ -294,11 +300,36 @@ function init() {
   // On load, we should start at the home screen
   displayHomeScreen();
 
-  // Setup history initial values
+  // Setup history initial values (Commented out to reduce function calls)
+  /*auth.onAuthStateChanged(user => {
+    if(!user) {
+      console.log('No calendar');
+    } else {
+      // Setup calendar
+      renderCalendar();
+    }
+  });*/
   renderHistory();
 
   // Setup card flipping functionality
   setupCardFlips();
+
+  // update the sign in button
+  displayLoginButton();
+
+  // if screen is resized
+  // eslint-disable-next-line no-undef
+  window.addEventListener('resize', () => {
+    // eslint-disable-next-line no-undef
+    if (window.innerWidth < 755) {
+      // flip all the cards back
+      const cardFlips = document.querySelectorAll('.cardflip');
+      cardFlips.forEach(function (cardFlip) {
+        cardFlip.classList.toggle('flipped', false);
+      });
+    }
+  });
+
 }
 
 /**
@@ -312,6 +343,19 @@ function generateHandler() { // eslint-disable-line no-unused-vars
   currentReading = reading;
   const isFromHistory = false;
   displayReading(isFromHistory);
+  allowCardFlips = true;
+}
+
+/**
+ * Handler to populate content after generating AI response
+ * @param {string} text AI-generated interpretation of drawn cards
+ * @param drawnCards Randomly drawn cards from vertexAI
+ */
+export function generateAIHandler(text, drawnCards) {
+  const reading = text;
+  currentReading = generateAiReading(reading, drawnCards);
+  const isFromHistory = false;
+  displayAIReading(isFromHistory);
   allowCardFlips = true;
 }
 
@@ -335,6 +379,14 @@ function saveHandler() { // eslint-disable-line no-unused-vars
  * and show all elements which we do want displayed
  */
 function displayHomeScreen() {
+  // remove active class from all tabs
+  for (const tab of document.querySelectorAll('.nav-item')) {
+    tab.classList.remove('active');
+  }
+
+  // make daily fortune tab active
+  document.getElementById('nav-btn-home').classList.add('active');
+
   // hide history section
   document.getElementById('history-section').hidden = true;
 
@@ -353,6 +405,87 @@ function displayHomeScreen() {
   // show generate button and question list
   document.getElementById('fortune-generating').hidden = false;
 
+  document.getElementById('daily-fortune-section').hidden = true;
+
+
+  
+  // unflip cards and disable flipping
+  allowCardFlips = false;
+  let cardFlips = document.querySelectorAll('.cardflip');
+  cardFlips.forEach(function (cardFlip) {
+    cardFlip.classList.toggle('flipped', false);
+  });
+}
+
+
+/**
+ * Daily fortune display function
+ * This function will hide all html elements that we do not want shown on the daily fortune screen,
+ * and show all elements which we do want displayed
+ * If the user is not logged in, forces log in attempt
+ * If the user has generated a daily fortune, hides the generate button
+ */
+function displayDailyFortuneScreen() {
+  document.getElementById('daily-generate-btn').hidden = true;
+
+  const app = firebaseApp;
+  const auth = getAuth(app);
+  auth.onAuthStateChanged(user => {
+    if(!user) {
+      window.location.href = 'login.html'; //eslint-disable-line
+    } else {
+      console.log(user);
+      checkDailyStatus().then( async (status) => {
+        console.log('status check successful');
+        if( status.data === false ) {
+          statusCheck = false;
+          console.log(statusCheck);
+          console.log('Show Button');
+          document.getElementById('daily-generate-btn').hidden = false;
+          document.getElementById('meaning-section').hidden = true;
+        } else {
+          statusCheck = true;
+          console.log(statusCheck);
+          document.getElementById('daily-generate-btn').hidden = true;
+          document.getElementById('meaning-section').hidden = false;
+          let meaning = document.getElementById('meaning');
+          const genMessage = 'Thank you for generating your fortune! Come back tomorrow for a new fortune. \n Check out this week\'s fortune in the History tab';
+          meaning.innerHTML = `<p> ${genMessage} </p>`;
+          meaning.style.display = 'block';
+        }
+      }).catch( async (error) => {
+        console.log('status check failed', error.message);
+      });
+    }
+  });
+  /*if (!auth.currentUser) {
+    console.log('Not logged in');
+    //document.getElementById('login-popup').style.display = 'flex';  // Show the login popup if not logged in
+    return;  // Stop the function if not logged in
+  }*/
+
+  // If logged in, hide the popup if it was previously shown
+  //document.getElementById('login-popup').style.display = 'none';
+
+
+  // hide history section
+  document.getElementById('history-section').hidden = true;
+  // change card images back to their defaults
+  document.getElementById('display-img-left').src = './images/default-card.jpeg';
+  document.getElementById('display-img-mid').src = './images/default-card.jpeg';
+  document.getElementById('display-img-right').src = './images/default-card.jpeg';
+
+
+  // hide save button and fortune meaning
+  document.getElementById('save').hidden = true;
+
+  // show card images
+  document.querySelector('.card-container').style.display = 'flex';
+
+  // show generate button and question list
+  document.getElementById('fortune-generating').hidden = true;
+
+  document.getElementById('daily-fortune-section').hidden = false;
 
   // unflip cards and disable flipping
   allowCardFlips = false;
@@ -360,6 +493,15 @@ function displayHomeScreen() {
   cardFlips.forEach(function (cardFlip) {
     cardFlip.classList.toggle('flipped', false);
   });
+
+  // remove active class from all tabs
+  for (const tab of document.querySelectorAll('.nav-item')) {
+    tab.classList.remove('active');
+  }
+
+  // make daily fortune tab active
+  document.getElementById('nav-btn-daily-fortune').classList.add('active');
+
 }
 
 /**
@@ -369,18 +511,60 @@ function displayHomeScreen() {
  * For this screen, we only want history related items, all others buttons/images should be hidden
  */
 function displayHistoryScreen() { // eslint-disable-line no-unused-vars
+  const app = firebaseApp;
+  const auth = getAuth(app);
+  auth.onAuthStateChanged(user => {
+    if(!user) {
+      console.log('No calendar');
+    } else {
+      // Setup calendar
+      renderCalendar();
+    }
+  });
+
+  // remove active class from all tabs
+  for (const tab of document.querySelectorAll('.nav-item')) {
+    tab.classList.remove('active');
+  }
+
+
+
+  // make history tab active
+  document.getElementById('nav-btn-history').classList.add('active');
+
   // show history section
   document.getElementById('history-section').hidden = false;
-
-  //hide card images
+  document.getElementById('meaning-section').hidden = true;
+  // hide card images
   document.querySelector('.card-container').style.display = 'none';
 
   // hide save button and fortune meaning
-  document.getElementById('meaning-section').hidden = true;
   document.getElementById('save').hidden = true;
 
   // hide generate button and question list
   document.getElementById('fortune-generating').hidden = true;
+
+  // hide daily generate button
+  document.getElementById('daily-fortune-section').hidden = true;
+}
+
+function displayLoginButton() {
+  // the button element
+  const loginBtn = document.getElementById('authlink');
+
+  const app = firebaseApp;
+  const auth = getAuth(app);
+  // check user's sign in status
+  auth.onAuthStateChanged(user => {
+    if(!user) {
+      // user has not logged in
+      loginBtn.innerText = 'Login/Sign Up';
+    } else {
+      // user has logged in
+      loginBtn.innerText = 'Logout';
+    }
+  });
+
 }
 
 /**
@@ -388,7 +572,7 @@ function displayHistoryScreen() { // eslint-disable-line no-unused-vars
  * if the reading is selected from the history.
  * @param {boolean} isFromHistory True if the reading is from the history, false otherwise
  */
-function displayReading(isFromHistory) {
+export function displayReading(isFromHistory) {
   let imageLeft = document.getElementById('display-img-left');
   let imageMid = document.getElementById('display-img-mid');
   let imageRight = document.getElementById('display-img-right');
@@ -396,7 +580,53 @@ function displayReading(isFromHistory) {
   document.querySelector('.card-container').style.display = 'flex';
   document.getElementById('save').hidden = false;
   document.getElementById('meaning-section').hidden = false;
-  document.getElementById('history-section').hidden = false;
+  document.getElementById('history-section').hidden = true;
+  document.getElementById('daily-generate-btn').hidden = true;
+  if (isFromHistory) {
+    // hide question list and generate button
+    document.getElementById('fortune-generating').hidden = true;
+    // hide save button
+    document.getElementById('save').hidden = true;
+  }
+  
+  const firstCardMeaning = document.querySelector('.cardmeaning');
+  const secondCardMeaing = document.querySelectorAll('.cardmeaning')[1];
+  const thirdCardMeaning = document.querySelectorAll('.cardmeaning')[2];
+  const firstCardTitle = document.querySelector('.card-title');
+  const secondCardTitle = document.querySelectorAll('.card-title')[1];
+  const thirdCardTitle = document.querySelectorAll('.card-title')[2];
+
+  firstCardMeaning.textContent = currentReading.pastMeaning;
+  secondCardMeaing.textContent = currentReading.presentMeaning;
+  thirdCardMeaning.textContent = currentReading.futureMeaning;
+  firstCardTitle.textContent = currentReading.cards[0];
+  secondCardTitle.textContent = currentReading.cards[1];
+  thirdCardTitle.textContent = currentReading.cards[2];
+
+  imageLeft.src = './images/Major Arcana/' + currentReading.cards[0] + '.png';
+  imageMid.src = './images/Major Arcana/' + currentReading.cards[1] + '.png';
+  imageRight.src = './images/Major Arcana/' + currentReading.cards[2] + '.png';
+
+  let meaning = document.getElementById('meaning');
+  meaning.innerHTML = `
+    <h3>${currentReading.userInput}</h3>
+    <p>${currentReading.fortune}</p>
+  `;
+  meaning.style.display = 'block';
+
+  allowCardFlips = true;
+}
+
+export function displayAIReading(isFromHistory) {
+  let imageLeft = document.getElementById('display-img-left');
+  let imageMid = document.getElementById('display-img-mid');
+  let imageRight = document.getElementById('display-img-right');
+
+  document.querySelector('.card-container').style.display = 'flex';
+  document.getElementById('save').hidden = true;
+  document.getElementById('meaning-section').hidden = false;
+  document.getElementById('history-section').hidden = true;
+  document.getElementById('daily-generate-btn').hidden = true;
   if (isFromHistory) {
     // hide question list and generate button
     document.getElementById('fortune-generating').hidden = true;
@@ -433,11 +663,85 @@ function displayReading(isFromHistory) {
 }
 
 /**
+ * Displays the calendar of daily readings
+ */
+
+function renderCalendar() {
+  let arrayHistory = [];
+  pullHistory().then( async (array) => {
+    console.log('array draw successful');
+    if(array.data) {
+      arrayHistory = array.data;
+      console.log(arrayHistory);
+      for (let dateFortune in arrayHistory) {
+        let parts = arrayHistory[dateFortune].split('::');
+        let cards = parts[0].split(',');
+        let dayObj = {
+          card1: cards[0],
+          card2: cards[1],
+          card3: cards[2],
+          text: parts[1],
+          day: dateFortune,
+          cardImgs: [`./images/Major Arcana/${cards[0]}.png`, `./images/Major Arcana/${cards[1]}.png`, `./images/Major Arcana/${cards[2]}.png`]
+        };
+        console.log(cards[2]);
+        if (dayObj.card2 === undefined) {
+          //console.log('bye');
+          continue;
+        }
+        //console.log('Hi');
+        let dayItem = document.createElement('div');
+        dayItem.classList.add('day-item');
+        dayItem.id = `day-item-${dayObj.day}`;
+        const dayDiv = document.getElementById(`fortune-${dayObj.day}`);
+
+          const days = document.querySelectorAll('.calendar div');
+          console.log(days.length);
+          days.forEach((day) => {
+            day.addEventListener('click', () => {
+              document.getElementById('fortune-text').innerText = dayObj.text;
+              document.getElementById('card').style.display = 'block';
+              document.getElementById('overlay').style.display = 'block';
+              document.getElementById('card-title').innerText = day.querySelector('h3').innerText;
+              for (let i = 0; i < dayObj.cardImgs.length; i++) {
+                document.getElementById(`card-${i+1}`).innerText = cards[i];
+                let dayItemImg = document.createElement('img');
+                dayItemImg.classList.add('day-item-img-popup');
+                dayItemImg.src = dayObj.cardImgs[i];
+                document.getElementById(`card-${i+1}`).appendChild(dayItemImg);
+              }
+            });
+
+        });
+        if (dayDiv) {
+          if (!dayDiv.hasChildNodes()) {
+            dayDiv.appendChild(dayItem);
+          } else {
+            dayDiv.replaceChild(dayItem, dayDiv.firstElementChild);
+          }
+        }
+        // Populate history images
+        for (let i = 0; i < dayObj.cardImgs.length; i++) {
+          let dayItemImg = document.createElement('img');
+          dayItemImg.classList.add('day-item-img');
+          dayItemImg.src = dayObj.cardImgs[i];
+          dayItem.appendChild(dayItemImg);
+        }
+      }
+    }
+  }).catch(async (error) => {
+    console.log('Array draw error', error.message);
+  });
+}
+
+
+
+
+/**
  * Displays the history of readings by generating the HTML elements
  */
 function renderHistory() {
   let historyList = [];
-
   // fetch the stored readings and populate history List
   let readings = getReadings();
   for (let index in readings) {
@@ -448,6 +752,7 @@ function renderHistory() {
       name: reading.name,
       cardImgs: [`./images/Major Arcana/${reading.cards[0]}.png`, `./images/Major Arcana/${reading.cards[1]}.png`, `./images/Major Arcana/${reading.cards[2]}.png`],
     };
+    // Pushing to general history
     historyList.push(historyObj);
   }
 
@@ -461,6 +766,7 @@ function renderHistory() {
     let historyItem = document.createElement('div');
     historyItem.classList.add('history-item');
     historyItem.id = `history-item-${historyObj.id}`;
+
 
     // Populate history images
     for (let i = 0; i < historyObj.cardImgs.length; i++) {
@@ -535,8 +841,56 @@ function setupCardFlips() {
   let cardFlips = document.querySelectorAll('.cardflip');
   cardFlips.forEach(function (cardFlip) {
     cardFlip.addEventListener('click', function () {
+      // eslint-disable-next-line no-undef
       if (allowCardFlips) {
-        this.classList.toggle('flipped');
+        // eslint-disable-next-line no-undef
+        if (window.innerWidth >= 755) {
+          this.classList.toggle('flipped');
+        }
+        else {
+          // get card title and card meaning
+          const card_title = cardFlip.children[1].children[1].firstElementChild.innerText;
+          const card_meaning = cardFlip.children[1].children[1].children[1].value;
+          // create an html dialog element
+          const card_meaning_dialog = document.createElement ('dialog');
+          card_meaning_dialog.style.setProperty('margin', 'auto');
+          card_meaning_dialog.style.setProperty('padding', '1em');
+          card_meaning_dialog.style.setProperty('max-width', '80vw');
+          card_meaning_dialog.style.setProperty('max-height', '80vh');
+          card_meaning_dialog.style.setProperty('border-radius', '10px');
+          card_meaning_dialog.style.setProperty('background-color', '#ccedfa');
+          document.body.appendChild (card_meaning_dialog);
+          card_meaning_dialog.showModal ();
+          document.body.style.overflow = 'hidden';
+
+          const close_btn = document.createElement('div');
+          close_btn.style.display = 'flex';
+          close_btn.style.justifyContent = 'flex-end';
+          close_btn.style.alignItems = 'center';
+          close_btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960"\n' +
+              '                                             width="24" fill="#949895">\n' +
+              '                    <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 ' +
+              '224-56 56-224-224-224 224Z"/></svg>' +
+              '</div>';
+          close_btn.addEventListener ('click', () => {
+            card_meaning_dialog.close ();
+            document.body.removeChild (card_meaning_dialog);
+            document.body.style.overflow = 'scroll';
+          });
+          close_btn.style.cursor = 'pointer';
+          card_meaning_dialog.appendChild (close_btn);
+
+          const div = document.createElement ('div');
+          div.style.setProperty('display', 'block');
+          div.style.setProperty('margin-block-start', '1em');
+          div.style.setProperty('margin-block-end', '1em');
+          div.style.setProperty('margin-inline-start', '0');
+          div.style.setProperty('margin-inline-end', '0');
+          div.style.setProperty('padding', '0 20px');
+
+          div.innerHTML = `<h3 style="text-align: center">${card_title}</h3><p style="color:black;">${card_meaning}</p>`;
+          card_meaning_dialog.appendChild (div);
+        }
       }
     });
   });
@@ -634,7 +988,7 @@ function renameReading(name, id) {
       break;
     }
   }
-
+  
   saveReadings(readings);
 }
 
@@ -697,10 +1051,34 @@ function generateReading(question) {
 }
 
 /**
+ * Creates a reading object from the user input text
+ * @param {string} genAnswer Daily fortune text returned by vertexAI
+ * @param {Array} drawnCards Randomized cards from drawing cards in vertexAI.js
+ * @returns {Object} The reading object for AI response
+ */
+function generateAiReading(genAnswer, drawnCards) {
+
+  let tarotReading = {
+    id: Date.now(),
+    name: new Date().toLocaleString(),
+    time: Date.now(),
+    cards: drawnCards,
+    fortune: genAnswer,
+    userInput: 'Today\'s Fortune',
+    pastMeaning: cardResponseData[drawnCards[0]].pastReading, // The meaning of the past card
+    presentMeaning: cardResponseData[drawnCards[1]].presentReading, // The meaning of the present card
+    futureMeaning: cardResponseData[drawnCards[2]].futureReading // The meaning of the future card
+  };
+
+  return tarotReading;
+
+}
+
+/**
  * Chooses 3 cards from the deck
  * @returns {Array} The array of the 3 selected card NAMES
  */
-function drawCards() {
+export function drawCards() {
   const cardsToDraw = 3;
 
   // Randomly selects 3 indexes (no duplicates)
@@ -754,3 +1132,23 @@ try {
 } catch {
   // do nothing, running in browser
 }
+
+
+//
+
+/*document.addEventListener('DOMContentLoaded', function () {
+  const days = document.querySelectorAll('.calendar div');
+  days.forEach((day, index) => {
+      day.addEventListener('click', () => {
+        //Get the fortune text from the backend and insert it here maybe?
+        const fortuneText = `Your fortune for ${day.querySelector('h3').innerText} is this right here blah blah!`;
+        document.getElementById('fortune-text').innerText = fortuneText;
+          document.getElementById('card').style.display = 'block';
+          document.getElementById('overlay').style.display = 'block';
+          document.getElementById('card-title').innerText = day.querySelector('h3').innerText;
+      });
+  });
+});*/
+
+
+

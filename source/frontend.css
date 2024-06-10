@@ -57,7 +57,7 @@ h2 {
     justify-content: center;
     width: 100%;
     min-height: 100%;
-    padding: 20px;
+    padding: 5%;
 }
 
 /* Styles for inactive tab headings, setting the color */
@@ -79,13 +79,12 @@ h2.active {
 /* FORM BLOCK */
 #form-block {
     background: white;
-    padding: 30px;
     width: 90%;
     max-width: 450px;
     position: relative;
     padding: 0px;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 25px;
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     /* text-align: center; */
 
@@ -100,7 +99,7 @@ a {
 
 /* FORM TYPOGRAPHY */
 #form-footer {
-    padding-bottom: 25px;
+    padding-bottom: 2%;
     text-align: center;
 }
 
@@ -127,7 +126,8 @@ input[type=submit] {
     font-size: 13px;
     text-transform: uppercase;
     border-radius: 3px;
-    margin: 5px 20px 30px 20px;
+    /* margin: 5px 20px 20px 20px; */
+    margin: 5% 20% 3% 20%;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -188,4 +188,106 @@ input[type=text]:placeholder {
 
 .inactive {
     color: grey; /* Inactive tab color */
+}
+
+/* Popup Styles */
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;  /* Ensure it is above all other content */
+}
+
+.popup-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 300px;
+    text-align: center;
+}
+
+/* Adjust the label styling */
+label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: #666; /* Gray color for labels */
+    font-size: 14px; /* Smaller font size for labels */
+    text-align: left;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Container adjustments for form alignment */
+#form-block {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    width: 85%;
+    margin: auto;
+}
+
+/* Styling adjustments for input fields */
+input[type=email], input[type=password] {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+/* Enhance submit button appearance */
+input[type=submit] {
+    margin-top: 1%;
+}
+
+/* Adjust 'Forgot Password?' link positioning */
+#form-footer {
+    margin-top: 20px; /* Space above the forgot password link */
+    font-size: 12px;
+}
+
+
+@media screen and (max-width: 1050px) {
+
+    #form-block {
+        width: 90%;
+    }
+}
+@media screen and (max-width: 968px) {
+
+    #form-block {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 755px) {
+
+    #form-block {
+        width: 60%;
+        height: 40%;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+
+    #form-block {
+        width: 70%;
+        height: 40%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    #form-block {
+        width: 70%;
+        height: 40%;
+    }
 }

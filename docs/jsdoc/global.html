@@ -156,7 +156,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line733">line 733</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line1113">line 1113</a>
     </li></ul></dd>
     
 
@@ -244,7 +244,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line605">line 605</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line961">line 961</a>
     </li></ul></dd>
     
 
@@ -381,7 +381,99 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line613">line 613</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line969">line 969</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="displayDailyFortuneScreen"><span class="type-signature"></span>displayDailyFortuneScreen<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Daily fortune display function
+This function will hide all html elements that we do not want shown on the daily fortune screen,
+and show all elements which we do want displayed
+If the user is not logged in, forces log in attempt
+If the user has generated a daily fortune, hides the generate button
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line428">line 428</a>
     </li></ul></dd>
     
 
@@ -472,7 +564,7 @@ For this screen, we only want history related items, all others buttons/images s
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line369">line 369</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line513">line 513</a>
     </li></ul></dd>
     
 
@@ -562,7 +654,7 @@ and show all elements which we do want displayed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line335">line 335</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line381">line 381</a>
     </li></ul></dd>
     
 
@@ -700,7 +792,7 @@ if the reading is selected from the history.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line389">line 389</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line575">line 575</a>
     </li></ul></dd>
     
 
@@ -788,7 +880,7 @@ if the reading is selected from the history.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line701">line 701</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line1081">line 1081</a>
     </li></ul></dd>
     
 
@@ -829,6 +921,533 @@ if the reading is selected from the history.
     <dd>
         
 <span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="generateAIHandler"><span class="type-signature"></span>generateAIHandler<span class="signature">(text, drawnCards)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handler to populate content after generating AI response
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>text</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">AI-generated interpretation of drawn cards</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>drawnCards</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Randomly drawn cards from vertexAI</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line354">line 354</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="generateAiReading"><span class="type-signature"></span>generateAiReading<span class="signature">(genAnswer, drawnCards)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Creates a reading object from the user input text
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>genAnswer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Daily fortune text returned by vertexAI</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>drawnCards</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Randomized cards from drawing cards in vertexAI.js</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line1059">line 1059</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The reading object for AI response
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="generateDailyFortune"><span class="type-signature">(async) </span>generateDailyFortune<span class="signature">(card1, card2, card3)</span><span class="type-signature"> &rarr; {Promise.&lt;*>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Provides and AI-generated fortune for the day based on three randomly selected tarot cards.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>card1</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">First randomly generated card</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>card2</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Second randomly generated card</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>card3</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Third randomly generated card</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="vertexAI.js.html">vertexAI.js</a>, <a href="vertexAI.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    String that contains AI-generated daily fortune
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;*></span>
 
 
     </dd>
@@ -900,7 +1519,7 @@ Updates the currentReading variable.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line307">line 307</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line340">line 340</a>
     </li></ul></dd>
     
 
@@ -1037,7 +1656,7 @@ Updates the currentReading variable.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line661">line 661</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line1017">line 1017</a>
     </li></ul></dd>
     
 
@@ -1196,7 +1815,7 @@ Updates the currentReading variable.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line587">line 587</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line943">line 943</a>
     </li></ul></dd>
     
 
@@ -1306,7 +1925,7 @@ Updates the currentReading variable.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line573">line 573</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line929">line 929</a>
     </li></ul></dd>
     
 
@@ -1416,7 +2035,7 @@ Updates the currentReading variable.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line644">line 644</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line1000">line 1000</a>
     </li></ul></dd>
     
 
@@ -1535,7 +2154,7 @@ Called after the page has loaded.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line275">line 275</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line282">line 282</a>
     </li></ul></dd>
     
 
@@ -1623,7 +2242,7 @@ Called after the page has loaded.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line725">line 725</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line1105">line 1105</a>
     </li></ul></dd>
     
 
@@ -1783,7 +2402,95 @@ Called after the page has loaded.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line624">line 624</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line980">line 980</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="renderCalendar"><span class="type-signature"></span>renderCalendar<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Displays the calendar of daily readings
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line669">line 669</a>
     </li></ul></dd>
     
 
@@ -1871,7 +2578,7 @@ Called after the page has loaded.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line436">line 436</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line743">line 743</a>
     </li></ul></dd>
     
 
@@ -1961,7 +2668,7 @@ Updates the history display.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line321">line 321</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line367">line 367</a>
     </li></ul></dd>
     
 
@@ -2098,7 +2805,7 @@ Updates the history display.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line555">line 555</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line911">line 911</a>
     </li></ul></dd>
     
 
@@ -2235,7 +2942,7 @@ Updates the history display.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line547">line 547</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line903">line 903</a>
     </li></ul></dd>
     
 
@@ -2323,7 +3030,7 @@ Updates the history display.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line532">line 532</a>
+        <a href="scripts.js.html">scripts.js</a>, <a href="scripts.js.html#line840">line 840</a>
     </li></ul></dd>
     
 
@@ -2369,13 +3076,13 @@ Updates the history display.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#closePopup">closePopup</a></li><li><a href="global.html#deleteAllReadings">deleteAllReadings</a></li><li><a href="global.html#deleteReading">deleteReading</a></li><li><a href="global.html#displayHistoryScreen">displayHistoryScreen</a></li><li><a href="global.html#displayHomeScreen">displayHomeScreen</a></li><li><a href="global.html#displayReading">displayReading</a></li><li><a href="global.html#drawCards">drawCards</a></li><li><a href="global.html#generateHandler">generateHandler</a></li><li><a href="global.html#generateReading">generateReading</a></li><li><a href="global.html#getReading">getReading</a></li><li><a href="global.html#getReadings">getReadings</a></li><li><a href="global.html#getUserInputText">getUserInputText</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#openPopup">openPopup</a></li><li><a href="global.html#renameReading">renameReading</a></li><li><a href="global.html#renderHistory">renderHistory</a></li><li><a href="global.html#saveHandler">saveHandler</a></li><li><a href="global.html#saveReading">saveReading</a></li><li><a href="global.html#saveReadings">saveReadings</a></li><li><a href="global.html#setupCardFlips">setupCardFlips</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#closePopup">closePopup</a></li><li><a href="global.html#deleteAllReadings">deleteAllReadings</a></li><li><a href="global.html#deleteReading">deleteReading</a></li><li><a href="global.html#displayDailyFortuneScreen">displayDailyFortuneScreen</a></li><li><a href="global.html#displayHistoryScreen">displayHistoryScreen</a></li><li><a href="global.html#displayHomeScreen">displayHomeScreen</a></li><li><a href="global.html#displayReading">displayReading</a></li><li><a href="global.html#drawCards">drawCards</a></li><li><a href="global.html#generateAIHandler">generateAIHandler</a></li><li><a href="global.html#generateAiReading">generateAiReading</a></li><li><a href="global.html#generateDailyFortune">generateDailyFortune</a></li><li><a href="global.html#generateHandler">generateHandler</a></li><li><a href="global.html#generateReading">generateReading</a></li><li><a href="global.html#getReading">getReading</a></li><li><a href="global.html#getReadings">getReadings</a></li><li><a href="global.html#getUserInputText">getUserInputText</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#openPopup">openPopup</a></li><li><a href="global.html#renameReading">renameReading</a></li><li><a href="global.html#renderCalendar">renderCalendar</a></li><li><a href="global.html#renderHistory">renderHistory</a></li><li><a href="global.html#saveHandler">saveHandler</a></li><li><a href="global.html#saveReading">saveReading</a></li><li><a href="global.html#saveReadings">saveReadings</a></li><li><a href="global.html#setupCardFlips">setupCardFlips</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Jun 14 2023 23:57:16 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jun 10 2024 03:15:06 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
