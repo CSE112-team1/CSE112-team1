@@ -27,10 +27,10 @@ If you are testing the application locally past the Jun 7th version of ‘dev’
 
 ## Deploying to Production
 From the project directory.
-`cd ./firebasecode`
+```cd ./firebasecode```
 Create a symlink from the project's frontend files to firebase directory if you haven't already
-`ln -s ../source ./source` 
+```ln -s ../source ./source` ``
 Deploy using the firebase-cli
-`firebase deploy`
+```firebase deploy```
 This will deploy the firebase functions in ./functions and any files in ./source (which is a symlink to [PROJECT_ROOT]/source)
 
