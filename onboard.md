@@ -28,7 +28,13 @@ If you are testing the application locally past the Jun 7th version of ‘dev’
 ## Deploying to Production
 From the project directory.
 
+
+
 ```cd ./firebasecode```
+
+Install necessary firebase npm packages
+
+```npm install .```
 
 Create a symlink from the project's frontend files to firebase directory if you haven't already
 
