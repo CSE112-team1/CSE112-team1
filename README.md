@@ -17,7 +17,8 @@
 
 ## For Developers:
 - Please review the onboard.md file in the repository for more details.
-
+- You will need to be added to our firebase project for development. Please contact a developer to be added to the project.
+  
 ## For Graders:
 - ADRs are located in the meeting_notes folder.
 - In our CI/CD pipeline, JSDocs will always fail on protected branches. To avoid unprotected the branch for every merge, we allow JSDoc to fail on merge to the development branch and unprotect the branch after merging dev to main.
